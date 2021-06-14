@@ -122,6 +122,7 @@ public class MenuActivity extends BaseMenuActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             mRecognizerBundle.loadFromIntent(data);
             Recognizer recognizer = mRecognizerBundle.getRecognizers()[0];
@@ -131,10 +132,10 @@ public class MenuActivity extends BaseMenuActivity {
                 return;
             }
 
-            MrzResult mrzResult = ((MrtdRecognizer.Result)result).getMrzResult();
+            MrzResult mrzResult = ((MrtdRecognizer.Result) result).getMrzResult();
             String scanResults =
                     "First name: " + mrzResult.getSecondaryId() +
-                    "\nLast name: " + mrzResult.getPrimaryId();
+                            "\nLast name: " + mrzResult.getPrimaryId();
 
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle("Scan result")

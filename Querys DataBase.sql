@@ -17,7 +17,7 @@ create table CivilStatus(
 );
 
 create table DocumentData(
-	documentId int(5) primary key,
+	documentId int(30) primary key,
     firstName varchar(50) not null,
     secondName varchar(50) not null,
     firstLasName varchar(50) not null,
@@ -36,6 +36,10 @@ create table DocumentData(
     optionalFieldOne varchar(50) not null,
     optionalFieldSecond varchar(50) not null,
     imgFront varchar(50) not null,
-    imgLater varchar(50) not null
+    imgLater varchar(50) not null,
+    documentTyoe int(5) not null,
+	CONSTRAINT FK_DocumentType FOREIGN KEY (documentTyoe) REFERENCES TypeDocuments(typeId),
+    CONSTRAINT FK_DocumentSex FOREIGN KEY (sex) REFERENCES TypeSex(sexId),
+    CONSTRAINT FK_DocumentCivilSatus FOREIGN KEY (civilStatus) REFERENCES CivilStatus(statusId)
 );
 
