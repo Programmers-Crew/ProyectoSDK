@@ -26,13 +26,14 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUseResult"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="guardarData"
         android:text="@string/resultsContinue"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 

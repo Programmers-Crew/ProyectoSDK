@@ -217,5 +217,6 @@ public class BlinkIDRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdRe
         if (resultSource == ResultSource.MIXED) {
             extractCommonData(result, mExtractedData, mBuilder);
         }
+
     }
 }
