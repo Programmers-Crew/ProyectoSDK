@@ -11,9 +11,24 @@ import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult;
 import com.microblink.libutils.R;
 import com.microblink.result.ResultSource;
 import com.microblink.result.extract.blinkid.BlinkIdExtractor;
-
+import com.microblink.results.date.DateResult;
+import com.microblink.DpiModel;
 public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdCombinedRecognizer.Result, BlinkIdCombinedRecognizer> {
+    public static String firstName;
+    public static String lastName;
+    public static String fullName;
+    public static String localizedName;
+    public static String sex;
+    public static String age;
+    public static String address;
+    public static DateResult birth;
+    public static String documentNumber;
+    public static String placeBirth;
+    public static String nacionality1;
+    public static DateResult dateExpire;
+    public static String maritalStatus;
 
+    public DpiModel dpi = new DpiModel();
     @Override
     public boolean doesSupportResultSourceExtraction() {
         return true;
@@ -223,10 +238,58 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
 
     @Override
     protected void onDataExtractionDone(BlinkIdCombinedRecognizer.Result result, ResultSource resultSource) {
+         firstName = result.getFirstName();
+         lastName = result.getLastName();
+         fullName = result.getFullName();
+         localizedName = result.getLocalizedName();
+         sex = result.getSex();
+         age = result.getSex();
+         address = result.getAddress();
+         birth = result.getDateOfBirth();
+         documentNumber = result.getDocumentNumber();
+         placeBirth = result.getPlaceOfBirth();
+         nacionality1 = result.getNationality();
+         dateExpire = result.getDateOfExpiry();
+         maritalStatus = result.getMaritalStatus();
+
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println("===================================================================");
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println(fullName);
+        System.out.println(localizedName);
+        System.out.println(sex);
+        System.out.println(age);
+        System.out.println(address);
+        System.out.println(birth);
+        System.out.println(documentNumber);
+        System.out.println(placeBirth);
+        System.out.println(nacionality1);
+        System.out.println(dateExpire);
+        System.out.println(maritalStatus);
+
+        dpi.setFirstName(firstName);
+        dpi.setLastName(lastName);
+        dpi.setFullName(fullName);
+        dpi.setLocalizedName(localizedName);
+        dpi.setSex(sex);
+        dpi.setAge(age);
+        dpi.setAddress(address);
+        dpi.setBirth(birth);
+        dpi.setDocumentNumber(documentNumber);
+        dpi.setPlaceBirth(placeBirth);
+        dpi.setNacionality1(nacionality1);
+        dpi.setDateExpire(dateExpire);
+        dpi.setMaritalStatus(maritalStatus);
+
         if (resultSource == ResultSource.MIXED) {
             extractCommonData(result, mExtractedData, mBuilder);
         }
-
     }
 
 }

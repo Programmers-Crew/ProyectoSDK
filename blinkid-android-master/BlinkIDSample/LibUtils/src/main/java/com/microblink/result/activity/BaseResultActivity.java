@@ -27,12 +27,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
+import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
 public abstract class BaseResultActivity extends AppCompatActivity {
 
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
-
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +66,24 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         findViewById(R.id.btnUseResult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("=====================================");
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.firstName);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.lastName);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.fullName);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.localizedName);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.sex);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.age);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.address);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.birth);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.documentNumber);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.placeBirth);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.nacionality1);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.dateExpire);
+                System.out.println(BlinkIDCombinedRecognizerResultExtractor.maritalStatus);
+
+
+
+
                 finish();
             }
         });
