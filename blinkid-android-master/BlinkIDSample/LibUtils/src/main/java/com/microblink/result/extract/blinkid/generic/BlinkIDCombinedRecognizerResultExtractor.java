@@ -8,27 +8,38 @@ import com.microblink.entities.recognizers.blinkid.generic.viz.VizResult;
 import com.microblink.entities.recognizers.blinkid.idbarcode.BarcodeElementKey;
 import com.microblink.entities.recognizers.blinkid.idbarcode.BarcodeElements;
 import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult;
+import com.microblink.image.Image;
 import com.microblink.libutils.R;
 import com.microblink.result.ResultSource;
 import com.microblink.result.extract.blinkid.BlinkIdExtractor;
 import com.microblink.results.date.DateResult;
-import com.microblink.DpiModel;
+
 public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdCombinedRecognizer.Result, BlinkIdCombinedRecognizer> {
     public static String firstName;
     public static String lastName;
-    public static String fullName;
-    public static String localizedName;
     public static String sex;
-    public static String age;
     public static String address;
-    public static DateResult birth;
-    public static String documentNumber;
+    public static String birth;
+    public static Integer age;
+    public static String dateExpire;
+    public static String dateExpedition;
     public static String placeBirth;
     public static String nacionality1;
-    public static DateResult dateExpire;
     public static String maritalStatus;
+    public static String documentNumber;
+    public static MrzResult mrx;
+    public static String documentTipe;
+    public static String expedidor;
+    public static String front;
+    public static String back;
+    public static String personal;
+    //public static String fullName;
 
-    public DpiModel dpi = new DpiModel();
+
+
+
+
+
     @Override
     public boolean doesSupportResultSourceExtraction() {
         return true;
@@ -238,31 +249,49 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
 
     @Override
     protected void onDataExtractionDone(BlinkIdCombinedRecognizer.Result result, ResultSource resultSource) {
+
+
+
          firstName = result.getFirstName();
          lastName = result.getLastName();
-         fullName = result.getFullName();
-         localizedName = result.getLocalizedName();
-         sex = result.getSex();
-         age = result.getSex();
+
+         if(result.getSex().equals("MASCULINO")){
+            sex = "1";
+         }else if(result.getSex().equals("FEMENINA")){
+            sex = "2";
+         }
+
+         age = result.getAge();
          address = result.getAddress();
-         birth = result.getDateOfBirth();
+         birth = result.getDateOfBirth().toString();
          documentNumber = result.getDocumentNumber();
          placeBirth = result.getPlaceOfBirth();
          nacionality1 = result.getNationality();
-         dateExpire = result.getDateOfExpiry();
-         maritalStatus = result.getMaritalStatus();
+         dateExpire = result.getDateOfExpiry().toString();
+         dateExpedition = result.getDateOfIssue().toString();
 
-        System.out.println("===================================================================");
-        System.out.println("===================================================================");
-        System.out.println("===================================================================");
-        System.out.println("===================================================================");
+         if(result.getMaritalStatus().equals("SOLTERO")){
+             maritalStatus = "1";
+         }else if(result.getMaritalStatus().equals("CASADO")){
+             maritalStatus = "2";
+         }else{
+             maritalStatus = "3";
+         }
+
+
+         documentTipe = "1";
+         mrx = result.getMrzResult();
+         expedidor = result.getIssuingAuthority();
+         front = result.getFullDocumentFrontImage().toString();
+        back = result.getFullDocumentBackImage().toString();
+        personal = result.getFaceImage().toString();
+
+     /*   System.out.println("===================================================================");
         System.out.println("===================================================================");
         System.out.println("===================================================================");
         System.out.println("===================================================================");
         System.out.println(firstName);
         System.out.println(lastName);
-        System.out.println(fullName);
-        System.out.println(localizedName);
         System.out.println(sex);
         System.out.println(age);
         System.out.println(address);
@@ -271,21 +300,15 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
         System.out.println(placeBirth);
         System.out.println(nacionality1);
         System.out.println(dateExpire);
+        System.out.println(dateExpedition);
         System.out.println(maritalStatus);
-
-        dpi.setFirstName(firstName);
-        dpi.setLastName(lastName);
-        dpi.setFullName(fullName);
-        dpi.setLocalizedName(localizedName);
-        dpi.setSex(sex);
-        dpi.setAge(age);
-        dpi.setAddress(address);
-        dpi.setBirth(birth);
-        dpi.setDocumentNumber(documentNumber);
-        dpi.setPlaceBirth(placeBirth);
-        dpi.setNacionality1(nacionality1);
-        dpi.setDateExpire(dateExpire);
-        dpi.setMaritalStatus(maritalStatus);
+        System.out.println(documentTipe);
+        System.out.println(mrx);
+        System.out.println(expedidor);
+        System.out.println(front);
+        System.out.println(back);
+        System.out.println(personal);
+*/
 
         if (resultSource == ResultSource.MIXED) {
             extractCommonData(result, mExtractedData, mBuilder);

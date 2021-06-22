@@ -14,8 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
+import com.loopj.android.http.AsyncHttpClient;
 import com.microblink.entities.recognizers.HighResImagesBundle;
 import com.microblink.image.Image;
 import com.microblink.image.highres.HighResImageWrapper;
@@ -28,7 +37,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
+
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class BaseResultActivity extends AppCompatActivity {
+    RequestQueue requestQueue;
+    AsyncHttpClient client=new AsyncHttpClient();
+
+    private static final String URL1 = "http://172.20.10.9/blinkid/saveDocumentData.php";
+
+
 
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
@@ -42,6 +62,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+        requestQueue = Volley.newRequestQueue(this);
 
         try {
             highResImagesBundle = new HighResImagesBundle(intent);
@@ -66,25 +87,40 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         findViewById(R.id.btnUseResult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("=====================================");
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.firstName);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.lastName);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.fullName);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.localizedName);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.sex);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.age);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.address);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.birth);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.documentNumber);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.placeBirth);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.nacionality1);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.dateExpire);
-                System.out.println(BlinkIDCombinedRecognizerResultExtractor.maritalStatus);
+
+                String subDateBD = BlinkIDCombinedRecognizerResultExtractor.birth.substring(0, 16);
+                String replaceStringBD = subDateBD.replace('.','-');
+                String subDate2BD = replaceStringBD.substring(6, 16);
 
 
+                String subDateExpi = BlinkIDCombinedRecognizerResultExtractor.dateExpire.substring(0, 16);
+                String replaceStringExpi = subDateExpi.replace('.','-');
+                String subDate2Expi = replaceStringExpi.substring(6, 16);
 
+                String subDateExpe = BlinkIDCombinedRecognizerResultExtractor.dateExpedition.substring(0, 16);
+                String replaceStringExpe = subDateExpe.replace('.','-');
+                String subDate2Expe = replaceStringExpe.substring(6, 16);
 
-                finish();
+                createUser(
+                        BlinkIDCombinedRecognizerResultExtractor.firstName,
+                        BlinkIDCombinedRecognizerResultExtractor.lastName,
+                        BlinkIDCombinedRecognizerResultExtractor.sex,
+                        BlinkIDCombinedRecognizerResultExtractor.address,
+                        subDate2BD,
+                        BlinkIDCombinedRecognizerResultExtractor.age.toString(),
+                        subDate2Expi,
+                        subDate2Expe,
+                        BlinkIDCombinedRecognizerResultExtractor.placeBirth,
+                        BlinkIDCombinedRecognizerResultExtractor.nacionality1,
+                        BlinkIDCombinedRecognizerResultExtractor.maritalStatus,
+                        BlinkIDCombinedRecognizerResultExtractor.documentNumber,
+                        BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
+                        BlinkIDCombinedRecognizerResultExtractor.documentTipe,
+                        BlinkIDCombinedRecognizerResultExtractor.front,
+                        BlinkIDCombinedRecognizerResultExtractor.back,
+                        BlinkIDCombinedRecognizerResultExtractor.personal
+                );
+            finish();
             }
         });
     }
@@ -199,6 +235,56 @@ public abstract class BaseResultActivity extends AppCompatActivity {
             String imageName = currentTime + ".jpeg";
             ImageUtils.storeHighResImage(this.getApplicationContext(), imageName, image);
         }
+    }
+
+    private void createUser(final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
+        final String nac, final String cstatus, final String id, final String mrz, final String dType, final String f, final String l, final String p) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                URL1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(BaseResultActivity.this, "Registro guardado"+response, Toast.LENGTH_SHORT).show();
+                        System.out.println(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("firstName", n);
+                params.put("firstLasName", ln);
+                params.put("sex", s);
+                params.put("address", add);
+                params.put("birthDate", bd);
+                params.put("age", age);
+                params.put("expirationDate", expi);
+                params.put("expeditionDate", expe);
+                params.put("birthPlace", bp);
+                params.put("nationality", nac);
+                params.put("civilStatus", cstatus);
+                params.put("documentNumber", id);
+                System.out.println(id);
+                params.put("textMRX", mrz);
+                params.put("documentTyoe", dType);
+                params.put("imgFront", f);
+                params.put("imgLater", l);
+                params.put("imgPersonal", p);
+
+                return params;
+
+            }
+        };
+        System.out.println("FECHA STRING");
+        System.out.println(expi);
+        requestQueue.add(stringRequest);
     }
 
 }

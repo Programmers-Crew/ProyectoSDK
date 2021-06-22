@@ -7,6 +7,7 @@ public class MenuListItem {
     private String mTitle;
     private Runnable mOnClickAction;
 
+
     @NonNull
     public String getTitle() {
         return mTitle;
