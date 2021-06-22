@@ -22,5 +22,4 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/mb_blue</item>
     </style>
-
 </resources>

@@ -46,7 +46,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     ListView lvlUser;
     Button btnFind;
 
-    String URL = "http://172.20.10.9/blinkid/listDocumentData.php";
+    String URL = "https://lektorgt.com/BlinkID/listDocumentData2.php";
 
 
     @Override
@@ -86,7 +86,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void obtenerUsers(){
-        String url = "http://172.20.10.9/blinkid/listDocumentData2.php";
+        String url = "https://lektorgt.com/BlinkID/listDocumentData2.php";
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
