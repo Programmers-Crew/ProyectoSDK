@@ -11,6 +11,7 @@ import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecogn
 import com.microblink.menu.MenuListItem;
 import com.microblink.menu.ResultHandlerMenuActivity;
 import com.microblink.result.activity.RecognizerBundleResultActivity;
+import com.microblink.result.activity.fragment.ListViewActivity;
 import com.microblink.uisettings.ActivityRunner;
 import com.microblink.uisettings.BlinkIdUISettings;
 import com.microblink.uisettings.DocumentVerificationUISettings;
@@ -69,6 +70,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
         List<MenuListItem> items = new ArrayList<>();
 
         items.add(buildBlinkIdCombinedElement());
+        items.add(listUsers());
 
         return items;
     }
@@ -135,6 +137,16 @@ public class MenuActivity extends ResultHandlerMenuActivity {
         });
     }
 
+    private MenuListItem listUsers() {
+        return new MenuListItem("LIST USERS", new Runnable() {
+            @Override
+            public void run() {
+               Intent intent = null;
+               intent = new Intent(MenuActivity.this, ListViewActivity.class);
+               startActivity(intent);
+            }
+        });
+    }
 
     private RecognizerBundle prepareRecognizerBundle(@NonNull Recognizer<?>... recognizers ) {
         return new RecognizerBundle(recognizers);

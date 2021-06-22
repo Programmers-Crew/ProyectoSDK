@@ -1,5 +1,5 @@
-create database BlinkID;
-use BlinkID;
+#create database BlinkID;
+#use BlinkID;
 
 create table TypeDocuments(
 	typeId int(5) primary key auto_increment,
@@ -38,6 +38,7 @@ create table DocumentData(
     imgFront varchar(50) not null,
     imgLater varchar(50) not null,
     documentTyoe int(5) not null,
+    documentNumber varchar(25) not null,
 	CONSTRAINT FK_DocumentType FOREIGN KEY (documentTyoe) REFERENCES TypeDocuments(typeId),
     CONSTRAINT FK_DocumentSex FOREIGN KEY (sex) REFERENCES TypeSex(sexId),
     CONSTRAINT FK_DocumentCivilSatus FOREIGN KEY (civilStatus) REFERENCES CivilStatus(statusId)
