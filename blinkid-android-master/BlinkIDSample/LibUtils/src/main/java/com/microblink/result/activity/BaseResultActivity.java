@@ -46,7 +46,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     AsyncHttpClient client=new AsyncHttpClient();
 
-    private static final String URL1 = "http://172.20.10.9/blinkid/saveDocumentData.php";
+    private static final String URL1 = "https://lektorgt.com/BlinkID/saveDocumentData.php";
 
 
 

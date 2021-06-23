@@ -8,27 +8,31 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:background="@color/microblink_blue"
         android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="15px"
+        android:paddingTop="15px"
+        android:paddingBottom="15px"
         android:theme="?attr/actionBarTheme"
-        app:title="LISTA DE USUARIO"
-        app:titleMarginStart="20px"
+        app:title="Usuarios Registrados"
         app:titleTextColor="#FFFFFF" />
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
+        android:layout_marginStart="20px"
+        android:layout_marginLeft="20px"
         android:layout_marginTop="20px"
-        android:layout_marginBottom="10px"
         android:layout_marginRight="15px"
-        android:paddingLeft="20px">
+        android:layout_marginBottom="20px">
 
         <EditText
             android:id="@+id/ettIdFind"
             android:layout_width="222dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Ingrese Cui..."
             android:inputType="textPersonName"
             android:paddingLeft="10px" />
 
@@ -45,9 +49,11 @@
 
     <ListView
         android:id="@+id/lvlUser"
+        style="@style/Widget.AppCompat.ListView"
         android:layout_width="match_parent"
-        android:layout_height="627dp">
-
-    </ListView>
+        android:layout_height="wrap_content"
+        android:divider="@color/preview_overlay_color"
+        android:dividerHeight="1dp"
+        android:fadeScrollbars="true"></ListView>
 
 </LinearLayout>

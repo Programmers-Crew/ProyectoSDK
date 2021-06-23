@@ -38,7 +38,7 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
     Button button3;
     String idSex;
 
-String URL = "http://172.20.10.9/blinkid/fetchDocumentData.php" + idSex;
+String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -80,7 +80,7 @@ String URL = "http://172.20.10.9/blinkid/fetchDocumentData.php" + idSex;
     }
 
     private void readUsers() {
-        String URL = "http://172.20.10.9/blinkid/fetchDocumentData.php?id=" + idSex;
+        String URL = "https://lektorgt.com/BlinkID/fetchDocumentData.php?id=" + idSex;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
