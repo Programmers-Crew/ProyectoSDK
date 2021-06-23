@@ -2,6 +2,7 @@ package com.microblink.result.activity.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.microblink.libutils.R;
+import com.microblink.result.activity.VolleyMultipartRequiest;
 import com.microblink.result.extract.RecognitionResultEntry;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResultEntryAdapter extends ArrayAdapter<RecognitionResultEntry> {
 
@@ -41,6 +55,7 @@ public class ResultEntryAdapter extends ArrayAdapter<RecognitionResultEntry> {
         iv.setImageBitmap(entry.getImageValue());
         return convertView;
     }
+
 
     private View setupTextEntry( View convertView, ViewGroup parent, RecognitionResultEntry entry ) {
         if ( convertView == null || convertView.getTag() != null ) {

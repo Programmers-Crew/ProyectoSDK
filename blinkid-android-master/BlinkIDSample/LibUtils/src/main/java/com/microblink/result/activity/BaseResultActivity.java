@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,7 +40,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
 
-import java.sql.Date;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,15 +53,14 @@ public abstract class BaseResultActivity extends AppCompatActivity {
 
     private static final String URL1 = "https://lektorgt.com/BlinkID/saveDocumentData.php";
 
-
-
+    private Bitmap bitmap;
+    private Bitmap bitmap2;
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setActivityContentView();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,7 +91,10 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         findViewById(R.id.btnUseResult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                bitmap =  BlinkIDCombinedRecognizerResultExtractor.frontImage.convertToBitmap();
+                uploadBitmap(bitmap);
+                bitmap2 =  BlinkIDCombinedRecognizerResultExtractor.backImage.convertToBitmap();
+                uploadBitmap1(bitmap2);
                 String subDateBD = BlinkIDCombinedRecognizerResultExtractor.birth.substring(0, 16);
                 String replaceStringBD = subDateBD.replace('.','-');
                 String subDate2BD = replaceStringBD.substring(6, 16);
@@ -117,9 +124,10 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                         BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
                         BlinkIDCombinedRecognizerResultExtractor.documentTipe,
                         BlinkIDCombinedRecognizerResultExtractor.front,
-                        BlinkIDCombinedRecognizerResultExtractor.back,
+                        BlinkIDCombinedRecognizerResultExtractor.backImage.getImageName(),
                         BlinkIDCombinedRecognizerResultExtractor.personal
                 );
+
             finish();
             }
         });
@@ -221,8 +229,10 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save_high_res) {
             saveHighResImages();
+            System.out.println("entra en high ress");
             return true;
         } else if (item.getItemId() == R.id.action_show_high_res) {
+            System.out.println("no entra");
             showHighResImagesDialog();
             return true;
         }
@@ -245,7 +255,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(BaseResultActivity.this, "Registro guardado"+response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseResultActivity.this, response, Toast.LENGTH_SHORT).show();
                         System.out.println(response);
                     }
                 },
@@ -285,6 +295,85 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         System.out.println("FECHA STRING");
         System.out.println(expi);
         requestQueue.add(stringRequest);
+    }
+
+    public void uploadBitmap(final Bitmap bitmap) {
+        String ROOT_URL = "https://lektorgt.com/BlinkID/uploadPrueba.php?a="+BlinkIDCombinedRecognizerResultExtractor.documentNumber;
+        VolleyMultipartRequiest volleyMultipartRequest = new VolleyMultipartRequiest(Request.Method.POST, ROOT_URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            System.out.println(obj.getString("message"));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("GotError",""+error.getMessage());
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("sendimage", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+    }
+
+    public void uploadBitmap1(final Bitmap bitmap) {
+        String ROOT_URL = "https://lektorgt.com/BlinkID/uploadBack.php?a="+BlinkIDCombinedRecognizerResultExtractor.documentNumber;
+        VolleyMultipartRequiest volleyMultipartRequest = new VolleyMultipartRequiest(Request.Method.POST, ROOT_URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            System.out.println(obj.getString("message"));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("GotError",""+error.getMessage());
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("sendimage", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+    }
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
 }

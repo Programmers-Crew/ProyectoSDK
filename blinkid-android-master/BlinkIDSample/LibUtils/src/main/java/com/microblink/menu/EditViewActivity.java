@@ -33,7 +33,7 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
 
     ProgressDialog pDialog;
 
-    EditText firtsName,lastName,dateBirth ,age,birthPlace,ExpeditionDate,expirationDate,address, Nacionality, shipper, sex, civilStatus,documentType, documentNumber;
+    EditText firtsName,lastName,dateBirth ,age,birthPlace,ExpeditionDate,expirationDate,address, Nacionality, shipper, sex, civilStatus,documentType, documentNumber,visits;
     Button button3;
     String idSex;
 
@@ -74,7 +74,7 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
         civilStatus = findViewById(R.id.civilStatus);
         documentType = findViewById(R.id.documentType);
         documentNumber = findViewById(R.id.documentNumber);
-
+        visits = findViewById(R.id.visitas);
         button3 = findViewById(R.id.button3);
     }
 
@@ -105,7 +105,7 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
                             String LcivilStatus = response.getString("statusDesc");
                             String LdocumentType = response.getString("firstName");
                             String LdocumentNumber = response.getString("typeDesc");
-
+                            String visit = response.getString("countVisit");
                             documentNumber.setText(LdocumentNumber);
                             firtsName.setText(LfirtsName);
                             lastName.setText(LlastName);
@@ -116,9 +116,10 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
                             expirationDate.setText(LexpirationDate);
                             address.setText(Laddress);
                             Nacionality.setText(LNacionality);
-                            sex.setText(LcivilStatus);
+                            sex.setText(Lsex);
                             civilStatus.setText(LcivilStatus);
                             documentType.setText(LdocumentType);
+                            visits.setText(visit);
                             loading.dismissDialog();
                         } catch (JSONException e) {
                             System.out.println("====================");

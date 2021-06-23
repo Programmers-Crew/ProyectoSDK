@@ -31,6 +31,8 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
     public static String documentTipe;
     public static String expedidor;
     public static String front;
+    public static Image frontImage;
+    public static Image backImage;
     public static String back;
     public static String personal;
     //public static String fullName;
@@ -257,7 +259,7 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
 
          if(result.getSex().equals("MASCULINO")){
             sex = "1";
-         }else if(result.getSex().equals("FEMENINA")){
+         }else if(result.getSex().equals("FEMENINO")){
             sex = "2";
          }
 
@@ -270,9 +272,9 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
          dateExpire = result.getDateOfExpiry().toString();
          dateExpedition = result.getDateOfIssue().toString();
 
-         if(result.getMaritalStatus().equals("SOLTERO")){
+         if(result.getMaritalStatus().equals("SOLTERO") || result.getMaritalStatus().equals("SOLTERA")){
              maritalStatus = "1";
-         }else if(result.getMaritalStatus().equals("CASADO")){
+         }else if(result.getMaritalStatus().equals("CASADO") || result.getMaritalStatus().equals("CASADA")){
              maritalStatus = "2";
          }else{
              maritalStatus = "3";
@@ -282,7 +284,9 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
          documentTipe = "1";
          mrx = result.getMrzResult();
          expedidor = result.getIssuingAuthority();
-         front = result.getFullDocumentFrontImage().toString();
+         front = result.getFrontImageAnalysisResult().getFaceDetectionStatus().name();
+         frontImage=result.getFullDocumentFrontImage();
+        backImage =result.getFullDocumentBackImage();
         back = result.getFullDocumentBackImage().toString();
         personal = result.getFaceImage().toString();
 
