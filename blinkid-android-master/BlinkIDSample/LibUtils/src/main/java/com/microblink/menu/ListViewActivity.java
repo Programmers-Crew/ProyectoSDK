@@ -119,8 +119,8 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
 
                 String lastName = jsonArreglo.getJSONObject(i).getString("firstLasName");
                 String replacelastName = lastName.replace('\n',' ');
-
-                lista.add(jsonArreglo.getJSONObject(i).getString("documentNumber")+ "\n" +replaceNombre+ "\n"+replacelastName);
+                String countVisits = jsonArreglo.getJSONObject(i).getString("countVisit");
+                lista.add(jsonArreglo.getJSONObject(i).getString("documentNumber")+ "\n" +replaceNombre+ "\n"+replacelastName+"\n"+"Visitas: "+countVisits+"\n");
 
             }
 

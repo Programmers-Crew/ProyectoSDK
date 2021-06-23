@@ -245,7 +245,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(BaseResultActivity.this, "Registro guardado"+response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseResultActivity.this, response, Toast.LENGTH_SHORT).show();
                         System.out.println(response);
                     }
                 },
