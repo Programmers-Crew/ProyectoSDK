@@ -12,7 +12,6 @@ import com.microblink.image.Image;
 import com.microblink.libutils.R;
 import com.microblink.result.ResultSource;
 import com.microblink.result.extract.blinkid.BlinkIdExtractor;
-import com.microblink.results.date.DateResult;
 
 public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdCombinedRecognizer.Result, BlinkIdCombinedRecognizer> {
     public static String firstName;
@@ -30,11 +29,16 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
     public static MrzResult mrx;
     public static String documentTipe;
     public static String expedidor;
+<<<<<<< Updated upstream
     public static String front;
     public static Image frontImage;
     public static Image backImage;
+=======
+    public static Image front;
+>>>>>>> Stashed changes
     public static String back;
     public static String personal;
+    public static Image imgPrueba;
     //public static String fullName;
 
 
@@ -145,6 +149,16 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
         add(R.string.MBRecognitionMode, result.getRecognitionMode().name());
 
         add(R.string.PPDocumentBothSidesMatch, result.getDocumentDataMatch().name());
+
+        System.out.println("IMAGENES");
+        System.out.println(R.string.MBDocumentFrontImageFaceStatus + "PRIMERA");
+        System.out.println(result.getFrontImageAnalysisResult().isBlurred());
+        System.out.println(result.getFrontImageAnalysisResult().getDocumentImageColorStatus());
+        System.out.println(result.getFrontImageAnalysisResult().getDocumentImageMoireStatus());
+        System.out.println(result.getFrontImageAnalysisResult().getFaceDetectionStatus());
+        System.out.println(result.getFrontImageAnalysisResult().getMrzDetectionStatus());
+        System.out.println(result.getFrontImageAnalysisResult().getBarcodeDetectionStatus());
+
     }
 
     private void extractVisualResults(VizResult result) {
@@ -259,7 +273,11 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
 
          if(result.getSex().equals("MASCULINO")){
             sex = "1";
+<<<<<<< Updated upstream
          }else if(result.getSex().equals("FEMENINO")){
+=======
+         }else{
+>>>>>>> Stashed changes
             sex = "2";
          }
 
@@ -284,11 +302,18 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
          documentTipe = "1";
          mrx = result.getMrzResult();
          expedidor = result.getIssuingAuthority();
+<<<<<<< Updated upstream
          front = result.getFrontImageAnalysisResult().getFaceDetectionStatus().name();
          frontImage=result.getFullDocumentFrontImage();
         backImage =result.getFullDocumentBackImage();
+=======
+         front = result.getFullDocumentFrontImage();
+>>>>>>> Stashed changes
         back = result.getFullDocumentBackImage().toString();
         personal = result.getFaceImage().toString();
+        imgPrueba = result.getFaceImage();
+        System.out.println("img prueas");
+        System.out.println(imgPrueba);
 
      /*   System.out.println("===================================================================");
         System.out.println("===================================================================");

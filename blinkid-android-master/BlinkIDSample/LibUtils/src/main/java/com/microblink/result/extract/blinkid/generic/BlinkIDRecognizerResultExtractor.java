@@ -8,11 +8,14 @@ import com.microblink.entities.recognizers.blinkid.generic.viz.VizResult;
 import com.microblink.entities.recognizers.blinkid.idbarcode.BarcodeElementKey;
 import com.microblink.entities.recognizers.blinkid.idbarcode.BarcodeElements;
 import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult;
+import com.microblink.image.Image;
 import com.microblink.libutils.R;
 import com.microblink.result.ResultSource;
 import com.microblink.result.extract.blinkid.BlinkIdExtractor;
 
 public class BlinkIDRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdRecognizer.Result, BlinkIdRecognizer> {
+    public static Image pImg;
+    public static int pImgS;
 
     @Override
     public boolean doesSupportResultSourceExtraction() {
@@ -103,6 +106,7 @@ public class BlinkIDRecognizerResultExtractor extends BlinkIdExtractor<BlinkIdRe
         add(R.string.MBDocumentImageColorStatus, result.getImageAnalysisResult().getDocumentImageColorStatus().name());
         add(R.string.MBDocumentImageMoireStatus, result.getImageAnalysisResult().getDocumentImageMoireStatus().name());
         add(R.string.MBDocumentImageFaceStatus, result.getImageAnalysisResult().getFaceDetectionStatus().name());
+
         add(R.string.MBDocumentImageMrzStatus, result.getImageAnalysisResult().getMrzDetectionStatus().name());
         add(R.string.MBDocumentImageBarcodeStatus, result.getImageAnalysisResult().getBarcodeDetectionStatus().name());
 

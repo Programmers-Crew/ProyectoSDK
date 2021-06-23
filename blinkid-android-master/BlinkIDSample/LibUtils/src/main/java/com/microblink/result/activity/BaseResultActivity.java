@@ -2,12 +2,18 @@ package com.microblink.result.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+<<<<<<< Updated upstream
 import android.util.Log;
+=======
+import android.provider.MediaStore;
+>>>>>>> Stashed changes
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.Base64;
 import com.microblink.entities.recognizers.HighResImagesBundle;
 import com.microblink.image.Image;
 import com.microblink.image.highres.HighResImageWrapper;
@@ -40,11 +47,20 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
 
+<<<<<<< Updated upstream
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+=======
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLOutput;
+>>>>>>> Stashed changes
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public abstract class BaseResultActivity extends AppCompatActivity {
@@ -53,10 +69,26 @@ public abstract class BaseResultActivity extends AppCompatActivity {
 
     private static final String URL1 = "https://lektorgt.com/BlinkID/saveDocumentData.php";
 
+<<<<<<< Updated upstream
     private Bitmap bitmap;
     private Bitmap bitmap2;
+=======
+
+    private int PICK_IMAGE_REQUEST = 1;
+
+    private String UPLOAD_URL ="https://lektorgt.com/BlinkID/upload.php";
+
+    private String KEY_IMAGEN = "foto";
+    private String KEY_NOMBRE = "idBuscado";
+
+    private String idBuscado = "";
+
+    Bitmap rotatedBmp;
+
+>>>>>>> Stashed changes
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
+
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +140,8 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 String replaceStringExpe = subDateExpe.replace('.','-');
                 String subDate2Expe = replaceStringExpe.substring(6, 16);
 
-                createUser(
+                idBuscado = BlinkIDCombinedRecognizerResultExtractor.documentNumber;
+                        createUser(
                         BlinkIDCombinedRecognizerResultExtractor.firstName,
                         BlinkIDCombinedRecognizerResultExtractor.lastName,
                         BlinkIDCombinedRecognizerResultExtractor.sex,
@@ -123,8 +156,12 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                         BlinkIDCombinedRecognizerResultExtractor.documentNumber,
                         BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
                         BlinkIDCombinedRecognizerResultExtractor.documentTipe,
+<<<<<<< Updated upstream
                         BlinkIDCombinedRecognizerResultExtractor.front,
                         BlinkIDCombinedRecognizerResultExtractor.backImage.getImageName(),
+=======
+                        BlinkIDCombinedRecognizerResultExtractor.back,
+>>>>>>> Stashed changes
                         BlinkIDCombinedRecognizerResultExtractor.personal
                 );
 
@@ -134,6 +171,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     }
 
     private void showHighResImagesDialog() {
+        System.out.println("Estoy aqui 1");
         if (highResImagesBundle != null && !highResImagesBundle.getImages().isEmpty()) {
             LinearLayout imagesLayout = new LinearLayout(this);
             imagesLayout.setOrientation(LinearLayout.VERTICAL);
@@ -155,7 +193,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                     case ORIENTATION_PORTRAIT_UPSIDE:
                         rotationMatrix.postRotate(270);
                 }
-                Bitmap rotatedBmp = Bitmap.createBitmap(
+                rotatedBmp = Bitmap.createBitmap(
                         highResBmp, 0, 0, highResBmp.getWidth(), highResBmp.getHeight(), rotationMatrix, true);
                 highResBmp.recycle();
 
@@ -171,6 +209,11 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageBitmap(rotatedBmp);
                 imagesLayout.addView(imageView);
+
+                imageView.setImageBitmap(rotatedBmp);
+
+                uploadImage();
+                System.out.println("Estoy aqui 2");
             }
 
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -183,6 +226,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 }
             });
             dialogBuilder.create().show();
+            System.out.println("Estoy aqui 3");
         }
     }
 
@@ -240,15 +284,18 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     }
 
     private void saveHighResImages() {
+        System.out.println("AQUIIIII SAVE 1");
         for(HighResImageWrapper image : highResImagesBundle.getImages()) {
             String currentTime = String.valueOf(System.currentTimeMillis());
             String imageName = currentTime + ".jpeg";
             ImageUtils.storeHighResImage(this.getApplicationContext(), imageName, image);
+            System.out.println("AQUIIIII SAVE 2");
+            uploadImage();
         }
     }
 
     private void createUser(final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
-        final String nac, final String cstatus, final String id, final String mrz, final String dType, final String f, final String l, final String p) {
+        final String nac, final String cstatus, final String id, final String mrz, final String dType, final String l, final String p) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 URL1,
@@ -284,7 +331,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 System.out.println(id);
                 params.put("textMRX", mrz);
                 params.put("documentTyoe", dType);
-                params.put("imgFront", f);
                 params.put("imgLater", l);
                 params.put("imgPersonal", p);
 
@@ -292,11 +338,76 @@ public abstract class BaseResultActivity extends AppCompatActivity {
 
             }
         };
-        System.out.println("FECHA STRING");
-        System.out.println(expi);
+        showHighResImagesDialog();
+        saveHighResImages();
         requestQueue.add(stringRequest);
     }
 
+
+    public String getStringImagen(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        //Mostrar el diálogo de progreso
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Descartar el diálogo de progreso
+                        //Mostrando el mensaje de la respuesta
+                        Toast.makeText(BaseResultActivity.this, s , Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Descartar el diálogo de progreso
+
+                        //Showing toast
+                        Toast.makeText(BaseResultActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Convertir bits a cadena
+                System.out.println("rota");
+                System.out.println(rotatedBmp);
+                String imagen = getStringImagen(rotatedBmp);
+
+                //Obtener el nombre de la imagen
+                String nombre = BlinkIDCombinedRecognizerResultExtractor.documentNumber;
+
+                System.out.println("valor img");
+                System.out.println(imagen);
+                System.out.println("valor id");
+                System.out.println(nombre);
+
+                //Creación de parámetros
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Agregando de parámetros
+                params.put("imagen", imagen);
+                params.put("idBuscado", nombre);
+
+                //Parámetros de retorno
+                return params;
+            }
+        };
+
+        //Creación de una cola de solicitudes
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Agregar solicitud a la cola
+        requestQueue.add(stringRequest);
+    }
+
+<<<<<<< Updated upstream
     public void uploadBitmap(final Bitmap bitmap) {
         String ROOT_URL = "https://lektorgt.com/BlinkID/uploadPrueba.php?a="+BlinkIDCombinedRecognizerResultExtractor.documentNumber;
         VolleyMultipartRequiest volleyMultipartRequest = new VolleyMultipartRequiest(Request.Method.POST, ROOT_URL,
@@ -375,5 +486,16 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
+=======
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Imagen"), PICK_IMAGE_REQUEST);
+    }
+
+
+
+>>>>>>> Stashed changes
 
 }

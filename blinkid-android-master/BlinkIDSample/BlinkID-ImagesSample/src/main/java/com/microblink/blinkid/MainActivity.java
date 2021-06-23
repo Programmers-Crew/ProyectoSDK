@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
 // in this example documents will be scanned and during scan multiple document images will be stored on external storage
 public class MainActivity extends BaseMenuActivity {
 
@@ -154,5 +155,7 @@ public class MainActivity extends BaseMenuActivity {
             }
         }
     }
+
+
 
 }
