@@ -1,4 +1,4 @@
-package com.microblink.result.activity.fragment;
+package com.microblink.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -49,6 +49,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     String URL = "https://lektorgt.com/BlinkID/listDocumentData2.php";
 
 
+    LoadingActivity loading = new LoadingActivity(ListViewActivity.this);
     @Override
     protected void onCreate(Bundle saveInstanceState) {
 
@@ -57,7 +58,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
 
         AsyncHttpClient client=new AsyncHttpClient();
         cliente = new AsyncHttpClient();
-
+        loading.startLoading();
         requestQueue = Volley.newRequestQueue(this);
 
         initUi();
@@ -125,7 +126,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
 
             ArrayAdapter<String> a = new ArrayAdapter(this,android.R.layout.simple_list_item_1,lista);
             lvlUser.setAdapter(a);
-
+            loading.dismissDialog();
             lvlUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
