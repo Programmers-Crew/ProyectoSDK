@@ -1,4 +1,4 @@
-package com.microblink.result.activity.fragment;
+package com.microblink.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.microblink.libutils.R;
-import com.microblink.menu.BaseMenuActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +37,7 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
     Button button3;
     String idSex;
 
+    LoadingActivity loading = new LoadingActivity(EditViewActivity.this);
 String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
     @Override
@@ -45,9 +45,8 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
         super.onCreate(saveInstanceState);
         setContentView(R.layout.edit_view);
-
         requestQueue = Volley.newRequestQueue(this);
-
+        loading.startLoading();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             idSex = extras.getString("id");
@@ -81,7 +80,10 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
     private void readUsers() {
         String URL = "https://lektorgt.com/BlinkID/fetchDocumentData.php?id=" + idSex;
-
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println("=================================");
+        System.out.println(idSex);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 URL,
@@ -117,7 +119,7 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
                             sex.setText(LcivilStatus);
                             civilStatus.setText(LcivilStatus);
                             documentType.setText(LdocumentType);
-
+                            loading.dismissDialog();
                         } catch (JSONException e) {
                             System.out.println("====================");
                             e.printStackTrace();
@@ -141,7 +143,7 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
         if (id == R.id.button3) {
             Intent intent = null;
-            intent = new Intent(EditViewActivity.this, BaseMenuActivity.class);
+            intent = new Intent(this, ListViewActivity.class);
             startActivity(intent);
         }
     }

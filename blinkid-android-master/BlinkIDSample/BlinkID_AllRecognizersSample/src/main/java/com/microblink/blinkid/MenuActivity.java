@@ -8,11 +8,12 @@ import android.widget.Toast;
 import com.microblink.entities.recognizers.Recognizer;
 import com.microblink.entities.recognizers.RecognizerBundle;
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer;
+import com.microblink.menu.LoadingActivity;
 import com.microblink.menu.MenuListItem;
 import com.microblink.menu.ResultHandlerMenuActivity;
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer;
 import com.microblink.result.activity.RecognizerBundleResultActivity;
-import com.microblink.result.activity.fragment.ListViewActivity;
+import com.microblink.menu.ListViewActivity;
 import com.microblink.uisettings.ActivityRunner;
 import com.microblink.uisettings.BlinkIdUISettings;
 import com.microblink.uisettings.DocumentVerificationUISettings;
@@ -57,7 +58,6 @@ public class MenuActivity extends ResultHandlerMenuActivity {
         // in case of problems with the SDK (crashes or ANRs, uncomment following line to enable
         // verbose logging that can help developers track down the problem)
         //Log.setLogLevel(Log.LogLevel.LOG_VERBOSE);
-
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -135,6 +135,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
                 BlinkIdCombinedRecognizer blinkIdCombined = new BlinkIdCombinedRecognizer();
                 ImageSettings.enableAllImages(blinkIdCombined);
                 scanAction(new BlinkIdUISettings(prepareRecognizerBundle(blinkIdCombined)));
+
             }
         });
     }
@@ -143,6 +144,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
         return new MenuListItem("USUARIOS REGISTRADOS", new Runnable() {
             @Override
             public void run() {
+
                Intent intent = null;
                intent = new Intent(MenuActivity.this, ListViewActivity.class);
                startActivity(intent);

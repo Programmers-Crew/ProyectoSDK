@@ -53,7 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/preview_overlay_color"
-        android:dividerHeight="1dp"
-        android:fadeScrollbars="true"></ListView>
+        android:dividerHeight="3dp"
+        android:fadeScrollbars="true"
+        android:paddingBottom="50px"></ListView>
 
 </LinearLayout>
