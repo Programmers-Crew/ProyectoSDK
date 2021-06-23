@@ -3,6 +3,7 @@ package com.microblink.util;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
@@ -13,12 +14,24 @@ import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.microblink.MicroblinkSDK;
 import com.microblink.hardware.orientation.Orientation;
 import com.microblink.image.Image;
 import com.microblink.image.highres.HighResImageWrapper;
+import com.microblink.result.activity.BaseResultActivity;
+import com.microblink.result.activity.VolleyMultipartRequiest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,9 +40,11 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-public class ImageUtils {
+public class ImageUtils  {
 
     private static final String IMAGES_FOLDER = "Documents/microblink";
     private static final String HIGH_RES_IMAGES_FOLDER = IMAGES_FOLDER + "/HighRes";
@@ -78,6 +93,8 @@ public class ImageUtils {
 
         return bitmapImage;
     }
+
+
 
     public static void storeHighResImage(Context context, String imageName, @NonNull HighResImageWrapper image) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

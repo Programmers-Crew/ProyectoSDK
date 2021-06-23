@@ -31,6 +31,8 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
     public static String documentTipe;
     public static String expedidor;
     public static String front;
+    public static Image frontImage;
+    public static Image backImage;
     public static String back;
     public static String personal;
     //public static String fullName;
@@ -282,7 +284,9 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
          documentTipe = "1";
          mrx = result.getMrzResult();
          expedidor = result.getIssuingAuthority();
-         front = result.getFullDocumentFrontImage().toString();
+         front = result.getFrontImageAnalysisResult().getFaceDetectionStatus().name();
+         frontImage=result.getFullDocumentFrontImage();
+        backImage =result.getFullDocumentBackImage();
         back = result.getFullDocumentBackImage().toString();
         personal = result.getFaceImage().toString();
 
