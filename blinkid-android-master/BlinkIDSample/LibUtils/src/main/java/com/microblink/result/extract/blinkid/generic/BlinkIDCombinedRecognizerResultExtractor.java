@@ -29,13 +29,9 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
     public static MrzResult mrx;
     public static String documentTipe;
     public static String expedidor;
-<<<<<<< Updated upstream
     public static String front;
     public static Image frontImage;
     public static Image backImage;
-=======
-    public static Image front;
->>>>>>> Stashed changes
     public static String back;
     public static String personal;
     public static Image imgPrueba;
@@ -273,11 +269,8 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
 
          if(result.getSex().equals("MASCULINO")){
             sex = "1";
-<<<<<<< Updated upstream
          }else if(result.getSex().equals("FEMENINO")){
-=======
          }else{
->>>>>>> Stashed changes
             sex = "2";
          }
 
@@ -302,13 +295,10 @@ public class BlinkIDCombinedRecognizerResultExtractor extends BlinkIdExtractor<B
          documentTipe = "1";
          mrx = result.getMrzResult();
          expedidor = result.getIssuingAuthority();
-<<<<<<< Updated upstream
          front = result.getFrontImageAnalysisResult().getFaceDetectionStatus().name();
          frontImage=result.getFullDocumentFrontImage();
         backImage =result.getFullDocumentBackImage();
-=======
-         front = result.getFullDocumentFrontImage();
->>>>>>> Stashed changes
+         front = result.getFullDocumentFrontImage().toString();
         back = result.getFullDocumentBackImage().toString();
         personal = result.getFaceImage().toString();
         imgPrueba = result.getFaceImage();

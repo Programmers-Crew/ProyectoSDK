@@ -2,10 +2,12 @@ package com.microblink.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
@@ -36,9 +39,11 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
     EditText firtsName,lastName,dateBirth ,age,birthPlace,ExpeditionDate,expirationDate,address, Nacionality, shipper, sex, civilStatus,documentType, documentNumber,visits;
     Button button3;
     String idSex;
+    ImageView imageFront, imageBack;
 
     LoadingActivity loading = new LoadingActivity(EditViewActivity.this);
-String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
+
+    String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -56,7 +61,8 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
 
         initUi();
         readUsers();
-
+        showPhoto();
+        showPhotoBack();
         button3.setOnClickListener(this);
     }
 
@@ -76,14 +82,14 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
         documentNumber = findViewById(R.id.documentNumber);
         visits = findViewById(R.id.visitas);
         button3 = findViewById(R.id.button3);
+        imageFront = findViewById(R.id.imageFront);
+        imageBack = findViewById(R.id.imageBack);
+
     }
 
     private void readUsers() {
         String URL = "https://lektorgt.com/BlinkID/fetchDocumentData.php?id=" + idSex;
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println("=================================");
-        System.out.println(idSex);
+        System.out.println(URL);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 URL,
@@ -147,6 +153,145 @@ String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
             intent = new Intent(this, ListViewActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void showPhoto(){
+        final String path = "https://lektorgt.com/BlinkID/uploads/";
+        final String[] ruta = {""};
+        String URL_IMAGE = "https://lektorgt.com/BlinkID/fetchImage.php?id=" + idSex;
+        System.out.println("holaaaaaaaaaaaaaaa");
+        System.out.println("holaaaaaaaaaaaaaaa");
+        System.out.println("holaaaaaaaaaaaaaaa");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                URL_IMAGE,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+
+                            ruta[0] = path + response.getString("imgFront");
+                            System.out.println(ruta[0]);
+                            ImageRequest imageRequest = new ImageRequest(
+                                    ruta[0],
+                                    new Response.Listener<Bitmap>() {
+                                        @Override
+                                        public void onResponse(Bitmap response) {
+                                            imageFront.setImageBitmap(response);
+                                        }
+                                    },
+                                    0,
+                                    0,
+                                    null,
+                                    null,
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println(error);
+                                        }
+                                    }
+                            );
+                            requestQueue.add(imageRequest);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println(error);
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
+
+
+    private void showPhotoBack(){
+        final String path = "https://lektorgt.com/BlinkID/uploads/";
+        final String[] ruta = {""};
+        String URL_IMAGE = "https://lektorgt.com/BlinkID/fetchImageBack.php?id=" + idSex;
+        System.out.println("holaaaaaaaaaaaaaaa");
+        System.out.println("holaaaaaaaaaaaaaaa");
+        System.out.println("holaaaaaaaaaaaaaaa");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                URL_IMAGE,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+                            System.out.println("entre entre");
+
+                            ruta[0] = path + response.getString("imgFront");
+                            System.out.println(ruta[0]);
+                            ImageRequest imageRequest = new ImageRequest(
+                                    ruta[0],
+                                    new Response.Listener<Bitmap>() {
+                                        @Override
+                                        public void onResponse(Bitmap response) {
+                                            imageBack.setImageBitmap(response);
+                                        }
+                                    },
+                                    0,
+                                    0,
+                                    null,
+                                    null,
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println("error");
+                                            System.out.println(error);
+                                        }
+                                    }
+                            );
+                            requestQueue.add(imageRequest);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println("error");
+                        System.out.println(error);
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 
 }
