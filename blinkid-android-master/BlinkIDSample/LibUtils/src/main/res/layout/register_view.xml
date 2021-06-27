@@ -114,11 +114,11 @@
             android:id="@+id/imageView9"
             android:layout_width="63dp"
             android:layout_height="50dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginEnd="49dp"
-            android:layout_marginRight="49dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegister4"
             app:layout_constraintEnd_toStartOf="@+id/ettAddres"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView8"
@@ -135,6 +135,8 @@
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -150,6 +152,8 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettUsername" />
@@ -165,6 +169,8 @@
             android:ems="10"
             android:hint="Phone"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettPass" />
@@ -181,6 +187,8 @@
             android:gravity="start|top"
             android:hint="Residential"
             android:inputType="textMultiLine"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettPhone" />
@@ -196,6 +204,8 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettResidential" />
@@ -211,6 +221,8 @@
             android:ems="10"
             android:hint="House"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettEmail" />
@@ -226,6 +238,8 @@
             android:ems="10"
             android:hint="Addres"
             android:inputType="textPersonName"
+            android:textColor="@color/mb_black"
+            android:textColorHint="#bdbdbd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettHouse" />
@@ -247,6 +261,7 @@
             android:layout_height="46dp"
             android:layout_marginTop="26dp"
             android:text="REGISTER"
+            android:textColor="#03A9F4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ettAddres" />

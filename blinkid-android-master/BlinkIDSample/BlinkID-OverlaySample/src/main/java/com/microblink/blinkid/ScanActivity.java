@@ -70,7 +70,7 @@ public class ScanActivity extends AppCompatActivity implements RecognizerRunnerF
 
         // scanning overlay must be created before restoring fragment state
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scan_activity);
+        setContentView(R.layout.mb_activity_scan);
 
         if (null == savedInstanceState) {
             // create fragment transaction to replace R.id.recognizer_runner_view_container with RecognizerRunnerFragment
