@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        android:background="@color/cardview_light_background">
 
         <ImageView
             android:id="@+id/imageView"
@@ -19,156 +21,236 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/IconUser" />
+            app:srcCompat="@drawable/iuser" />
+
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="63dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/user"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="151dp" />
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginRight="49dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettUsername"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:srcCompat="@drawable/user" />
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettPass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/pass" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettPhone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@drawable/phone" />
+
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettResidential"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:srcCompat="@drawable/residential" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:srcCompat="@drawable/emial" />
+
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettHouse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            app:srcCompat="@drawable/nohouse" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginRight="49dp"
+            app:layout_constraintEnd_toStartOf="@+id/ettAddres"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8"
+            app:srcCompat="@drawable/addres" />
 
         <EditText
             android:id="@+id/ettUsername"
             android:layout_width="253dp"
             android:layout_height="50dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.221" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <EditText
             android:id="@+id/ettPass"
             android:layout_width="253dp"
             android:layout_height="50dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettUsername"
-            app:layout_constraintVertical_bias="0.022" />
+            app:layout_constraintTop_toBottomOf="@+id/ettUsername" />
 
         <EditText
             android:id="@+id/ettPhone"
             android:layout_width="253dp"
             android:layout_height="50dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Phone"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettPass"
-            app:layout_constraintVertical_bias="0.03" />
+            app:layout_constraintTop_toBottomOf="@+id/ettPass" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine2"
+            android:id="@+id/ettResidential"
             android:layout_width="253dp"
             android:layout_height="50dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:gravity="start|top"
             android:hint="Residential"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettPhone"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintTop_toBottomOf="@+id/ettPhone" />
 
         <EditText
             android:id="@+id/ettEmail"
             android:layout_width="253dp"
             android:layout_height="50dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Email"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintTop_toBottomOf="@+id/ettResidential" />
 
         <EditText
             android:id="@+id/ettHouse"
             android:layout_width="253dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="House"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettEmail"
-            app:layout_constraintVertical_bias="0.034" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ettEmail" />
 
         <EditText
             android:id="@+id/ettAddres"
             android:layout_width="253dp"
             android:layout_height="50dp"
-            android:layout_marginStart="122dp"
-            android:layout_marginLeft="122dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginLeft="65dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="37dp"
-            android:layout_marginRight="37dp"
-            android:layout_marginBottom="57dp"
             android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Addres"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettHouse"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/ettHouse" />
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnLogin4"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="140dp"
-            android:layout_height="49dp"
-            android:layout_marginBottom="28dp"
-            android:text="Login"
-            android:textColor="#03A9F4"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="193dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="5dp"
+            android:text="LOGIN"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.94"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister4" />
 
         <Button
-            android:id="@+id/btnRegister"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="80dp"
-            android:background="@drawable/button_social"
-            android:text="REGISTRAR"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btnRegister4"
+            android:layout_width="330dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="26dp"
+            android:text="REGISTER"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.428"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ettAddres" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

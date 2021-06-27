@@ -2,139 +2,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="1080px"
+    android:layout_height="1920px"
+    android:background="@color/cardview_light_background"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="1080px"
+        android:layout_height="1920px"
+        android:background="#ffffff">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="142dp"
             android:layout_height="148dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/IconUser" />
+            tools:src="@drawable/iuser" />
 
         <EditText
             android:id="@+id/ettPass"
-            android:layout_width="246dp"
-            android:layout_height="44dp"
+            android:layout_width="248dp"
+            android:layout_height="55dp"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/mb_blue_dark"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.756"
+            app:layout_constraintHorizontal_bias="0.711"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettUsername"
-            android:backgroundTint="@color/mb_blue_dark"
-            />
-
-        <EditText
-            android:id="@+id/ettUsername"
-            android:layout_width="248dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="72dp"
-            android:ems="10"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.756"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            android:backgroundTint="@color/mb_blue_dark"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/ettUsername" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="64dp"
             android:layout_height="48dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="328dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="280dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ettPass"
-            app:layout_constraintHorizontal_bias="0.977"
+            app:layout_constraintHorizontal_bias="0.35"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/pass" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView3"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginBottom="95dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ettUsername"
+            app:layout_constraintHorizontal_bias="0.83"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/user" />
+
+        <EditText
+            android:id="@+id/ettUsername"
+            android:layout_width="248dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="@color/mb_blue_dark"
+            android:ems="10"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.669"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <Button
             android:id="@+id/btnRegister"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="240dp"
-            android:text="LOGIN"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/button_social"
-            />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
-            style="@android:style/Widget.DeviceDefault.ImageButton"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="76dp"
-            android:layout_marginLeft="76dp"
-            android:layout_marginBottom="120dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageButton5"
-            app:srcCompat="@drawable/web"
-            />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            style="@android:style/Widget.DeviceDefault.ImageButton"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="116dp"
-            android:layout_marginLeft="116dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRegister"
-            app:layout_constraintVertical_bias="0.354"
-            app:srcCompat="@drawable/facebook" />
-
-        <Button
-            android:id="@+id/btnLogin"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="193dp"
             android:layout_height="46dp"
-            android:layout_marginBottom="192dp"
             android:text="¿No tiene una cuenta?"
             android:textColor="#03A9F4"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.816"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="70dp"
+            android:text="LOGIN"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ettPass" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            style="@android:style/Widget.ImageButton"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginRight="150dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister"
+            app:srcCompat="@drawable/facebook" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            style="@android:style/Widget.ImageButton"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="36dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister"
+            app:srcCompat="@drawable/web" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

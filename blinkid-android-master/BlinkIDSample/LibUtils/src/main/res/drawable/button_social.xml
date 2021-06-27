@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radios="25dp"/>
-    <solid android:color="@color/mb_blue_dark"/>
-</shape>
