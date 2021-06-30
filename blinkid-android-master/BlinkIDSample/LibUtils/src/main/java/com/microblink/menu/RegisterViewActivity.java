@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,10 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
 
     EditText ettUsername, ettPass,ettPhone,ettResidential, ettEmail, ettHouse,ettAddres;
     Button btnRegister4, btnLogin4;
+    ProgressBar progress;
+
+    String respuesta = "";
+
 
     private static final String RegisterURL = "https://lektorgt.com/BlinkID/Users/addUser.php";
     //LoadingActivity loading = new LoadingActivity(LoginViewActivity.this);
@@ -69,6 +74,8 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
 
         btnRegister4 = findViewById(R.id.btnRegister4);
         btnLogin4 = findViewById(R.id.btnLogin4);
+
+        progress = findViewById(R.id.progress);
     }
 
     public void onClick(View v) {
@@ -83,21 +90,34 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
            String house = ettHouse.getText().toString().trim();
            String address = ettAddres.getText().toString().trim();
 
-           registerUser(name,
-                        password,
-                        phone,
-                        email,
-                        residential,
-                        house,
-                        address
-           );
 
+
+           if(name.equals("") && password.equals("") && phone.equals("") && residential.equals("") && email.equals("") && house.equals("") && address.equals("")){
+                Toast.makeText(getApplicationContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
+           }else {
+               if(password.length()>7){
+                   Toast.makeText(getApplicationContext(), "Telefono no puede ser mayor a 7 digitos", Toast.LENGTH_SHORT).show();
+               }else if(ettPhone.length()>7){
+                   Toast.makeText(getApplicationContext(), "Telefono no puede ser menor a 7 digitos", Toast.LENGTH_SHORT).show();
+               }else{
+                   registerUser(name,
+                           password,
+                           phone,
+                           email,
+                           residential,
+                           house,
+                           address
+                   );
+
+                   progress.setVisibility(View.VISIBLE);
+               }
+           }
         }else if(id == R.id.btnLogin4){
             Intent intent = new Intent(this, LoginViewActivity.class);
             startActivity(intent);
-
         }
     }
+
 
     public void registerUser(final String username,final String userPassword,final String userPhone,final String userEmail, final String userResidential, final String userNoHouse, final String userAddress){
         final StringRequest stringRequest = new StringRequest(
@@ -106,10 +126,12 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(RegisterViewActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                        System.out.println("correcto");
-                        System.out.println(response);
-
+                        Toast.makeText(RegisterViewActivity.this, response, Toast.LENGTH_SHORT).show();
+                        respuesta = response;
+                        if(respuesta.equals("Usuario registrado exitosamente")){
+                            limpiarText();
+                        }
+                        progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -131,10 +153,21 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
                 params.put("userNoHouse", userNoHouse);
                 params.put("userAddres", userAddress);
                 return params;
-
             }
         };
         requestQueue.add(stringRequest);
     }
+
+    public void limpiarText(){
+        ettUsername.setText("");
+        ettPass.setText("");
+        ettPhone.setText("");
+        ettResidential.setText("");
+        ettEmail.setText("");
+        ettHouse.setText("");
+        ettAddres.setText("");
+    };
+
+
 
 }

@@ -14,6 +14,7 @@ allprojects {
         jcenter()
         maven { url 'https://maven.microblink.com' }
 //        mavenLocal()
+        maven { url 'https://jitpack.io' }
         google()
     }
 }

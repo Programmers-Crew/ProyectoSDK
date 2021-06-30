@@ -74,6 +74,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
 
         items.add(buildBlinkIdCombinedElement());
         items.add(listUsers());
+        items.add(cerrarSesion());
         return items;
     }
 
@@ -151,6 +152,18 @@ public class MenuActivity extends ResultHandlerMenuActivity {
             }
         });
     }
+
+    private MenuListItem cerrarSesion() {
+        return new MenuListItem("Cerrar Sesion", new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = null;
+                intent = new Intent(MenuActivity.this, ListViewActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     private MenuListItem buildUsdlElement() {
         return new MenuListItem("USDL", new Runnable() {
             @Override

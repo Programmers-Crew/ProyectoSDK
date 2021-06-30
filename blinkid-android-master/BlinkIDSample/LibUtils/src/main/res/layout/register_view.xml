@@ -1,271 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/cardview_light_background">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        android:background="@color/cardview_light_background">
+        android:layout_width="417dp"
+        android:layout_height="713dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="115dp"
-            android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:text="SignUp "
+            android:textColor="#4fc3f7"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/iuser" />
+            tools:targetApi="jelly_bean" />
 
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="49dp"
-            android:layout_marginRight="49dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettUsername"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFullname"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:srcCompat="@drawable/user" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawableRight="@drawable/ic_user"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Username"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettPass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableEnd="@drawable/ic_password"
+                android:drawableRight="@drawable/ic_password"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Password"
+                android:inputType="textPassword"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_phone"
+                android:drawableRight="@drawable/ic_phone"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Phone"
+
+                android:inputType="phone"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_email"
+                android:drawableRight="@drawable/ic_email"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/residential"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettPass"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:srcCompat="@drawable/pass" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettPhone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4"
-            app:srcCompat="@drawable/phone" />
-
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettResidential"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:srcCompat="@drawable/residential" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettEmail"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            app:srcCompat="@drawable/emial" />
-
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/ettHouse"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7"
-            app:srcCompat="@drawable/nohouse" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="63dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="11dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="35dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister4"
-            app:layout_constraintEnd_toStartOf="@+id/ettAddres"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView8"
-            app:srcCompat="@drawable/addres" />
-
-        <EditText
-            android:id="@+id/ettUsername"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
+            android:layout_marginBottom="265dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword">
 
-        <EditText
-            android:id="@+id/ettPass"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettResidential"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_house"
+                android:drawableRight="@drawable/ic_house"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Residential"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ettNoHouse"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="235dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettUsername" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/ettPhone"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="Phone"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettHouse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_nohouse"
+                android:drawableRight="@drawable/ic_nohouse"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="House Number"
+                android:inputType="phone"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ettAddress"
+            android:layout_width="328dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="370dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettPass" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/ettResidential"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Residential"
-            android:inputType="textMultiLine"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ettAddres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_location"
+                android:drawableRight="@drawable/ic_location"
+                android:fontFamily="@font/poppinsmedium"
+                android:hint="Address"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettPhone" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 
-        <EditText
-            android:id="@+id/ettEmail"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
+        <Button
+            android:id="@+id/btnRegister4"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            app:layout_constraintBottom_toTopOf="@+id/btnLogin4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettResidential" />
-
-        <EditText
-            android:id="@+id/ettHouse"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="House"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettEmail" />
-
-        <EditText
-            android:id="@+id/ettAddres"
-            android:layout_width="253dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/mb_blue_dark"
-            android:ems="10"
-            android:hint="Addres"
-            android:inputType="textPersonName"
-            android:textColor="@color/mb_black"
-            android:textColorHint="#bdbdbd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettHouse" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnLogin4"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="193dp"
             android:layout_height="46dp"
-            android:layout_marginTop="5dp"
-            android:text="LOGIN"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRegister4" />
-
-        <Button
-            android:id="@+id/btnRegister4"
-            android:layout_width="330dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="26dp"
-            android:text="REGISTER"
+            android:layout_marginTop="495dp"
+            android:text="¿Ya tienes una cuenta?"
             android:textColor="#03A9F4"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ettAddres" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.843" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
