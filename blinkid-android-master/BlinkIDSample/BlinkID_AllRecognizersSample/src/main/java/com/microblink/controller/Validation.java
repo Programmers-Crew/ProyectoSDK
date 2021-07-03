@@ -1,19 +1,17 @@
-package com.microblink.menu;
+package com.microblink.controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
 
 public class Validation extends AppCompatActivity implements View.OnClickListener{
@@ -59,7 +57,7 @@ public class Validation extends AppCompatActivity implements View.OnClickListene
                 Intent intent = new Intent(this, LoginViewActivity.class);
                 startActivity(intent);
             }else if(!idValidation.equals("")){
-                Intent intent = new Intent(this, com.microblink.blinkid.MenuActivity.class);
+                Intent intent = new Intent(this, MenuActivity.class);
                 startActivity(intent);
             }
 

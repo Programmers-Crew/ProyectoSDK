@@ -19,7 +19,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="100dp"
             android:fontFamily="@font/poppinsbold"
             android:gravity="center"
             android:text="SignUp "
@@ -104,29 +104,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPassword"
-            android:layout_width="328dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginRight="13dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ettEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_email"
-                android:drawableRight="@drawable/ic_email"
-                android:fontFamily="@font/poppinsmedium"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                tools:targetApi="jelly_bean" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/residential"
             android:layout_width="328dp"
             android:layout_height="57dp"
@@ -136,7 +113,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ettResidential"
@@ -149,61 +126,16 @@
                 tools:targetApi="jelly_bean" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ettNoHouse"
-            android:layout_width="328dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="235dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ettHouse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_nohouse"
-                android:drawableRight="@drawable/ic_nohouse"
-                android:fontFamily="@font/poppinsmedium"
-                android:hint="House Number"
-                android:inputType="phone"
-                tools:targetApi="jelly_bean" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ettAddress"
-            android:layout_width="328dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="370dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ettAddres"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_location"
-                android:drawableRight="@drawable/ic_location"
-                android:fontFamily="@font/poppinsmedium"
-                android:hint="Address"
-                tools:targetApi="jelly_bean" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="713dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnRegister4"

@@ -1,4 +1,4 @@
-package com.microblink.menu;
+package com.microblink.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
 
     ProgressDialog pDialog;
 
-    EditText ettUsername, ettPass,ettPhone,ettResidential, ettEmail, ettHouse,ettAddres;
+    EditText ettUsername, ettPass,ettPhone,ettResidential;
     Button btnRegister4, btnLogin4;
     ProgressBar progress;
 
@@ -68,9 +68,6 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
         ettPass = findViewById(R.id.ettPass);
         ettPhone = findViewById(R.id.ettPhone);
         ettResidential = findViewById(R.id.ettResidential);
-        ettEmail = findViewById(R.id.ettEmail);
-        ettHouse = findViewById(R.id.ettHouse);
-        ettAddres = findViewById(R.id.ettAddres);
 
         btnRegister4 = findViewById(R.id.btnRegister4);
         btnLogin4 = findViewById(R.id.btnLogin4);
@@ -86,13 +83,10 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
            String password = ettPass.getText().toString().trim();
            String phone = ettPhone.getText().toString().trim();
            String residential = ettResidential.getText().toString().trim();
-           String email = ettEmail.getText().toString().trim();
-           String house = ettHouse.getText().toString().trim();
-           String address = ettAddres.getText().toString().trim();
 
 
 
-           if(name.equals("") && password.equals("") && phone.equals("") && residential.equals("") && email.equals("") && house.equals("") && address.equals("")){
+           if(name.equals("") && password.equals("") && phone.equals("") && residential.equals("")){
                 Toast.makeText(getApplicationContext(), "Hay campos vacios", Toast.LENGTH_SHORT).show();
            }else {
                if(password.length()>7){
@@ -103,10 +97,7 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
                    registerUser(name,
                            password,
                            phone,
-                           email,
-                           residential,
-                           house,
-                           address
+                           residential
                    );
 
                    progress.setVisibility(View.VISIBLE);
@@ -119,7 +110,7 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    public void registerUser(final String username,final String userPassword,final String userPhone,final String userEmail, final String userResidential, final String userNoHouse, final String userAddress){
+    public void registerUser(final String username,final String userPassword,final String userPhone,final String userResidential){
         final StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 RegisterURL,
@@ -148,10 +139,7 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
                 params.put("userName", username);
                 params.put("userPassword", userPassword);
                 params.put("userPhone", userPhone);
-                params.put("userEmail", userEmail);
                 params.put("userResidential", userResidential);
-                params.put("userNoHouse", userNoHouse);
-                params.put("userAddres", userAddress);
                 return params;
             }
         };
@@ -163,9 +151,6 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
         ettPass.setText("");
         ettPhone.setText("");
         ettResidential.setText("");
-        ettEmail.setText("");
-        ettHouse.setText("");
-        ettAddres.setText("");
     };
 
 

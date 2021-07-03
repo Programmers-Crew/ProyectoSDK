@@ -1,4 +1,4 @@
-package com.microblink.menu;
+package com.microblink.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
+import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
 
 import java.util.HashMap;
@@ -98,7 +98,7 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
 
             login(username, pass);
 
-            Intent intent = new Intent(this, BaseMenuActivity.class);
+            Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
 
             progressLogin.setVisibility(View.VISIBLE);
@@ -180,3 +180,4 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         editor.commit();
     }
 }
+

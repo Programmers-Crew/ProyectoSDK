@@ -284,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15px"
                 android:background="#09B3FF"
-                android:text="Regresar"
+                android:text="Ver visitas"
                 android:textColor="#FAFAFA" />
 
         </LinearLayout>

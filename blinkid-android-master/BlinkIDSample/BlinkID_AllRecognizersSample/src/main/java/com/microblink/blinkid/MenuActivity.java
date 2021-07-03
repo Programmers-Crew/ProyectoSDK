@@ -5,6 +5,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.microblink.controller.CerrarSesionViewActivity;
+import com.microblink.controller.ListViewActivity;
 import com.microblink.entities.recognizers.Recognizer;
 import com.microblink.entities.recognizers.RecognizerBundle;
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer;
@@ -13,7 +15,6 @@ import com.microblink.menu.MenuListItem;
 import com.microblink.menu.ResultHandlerMenuActivity;
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer;
 import com.microblink.result.activity.RecognizerBundleResultActivity;
-import com.microblink.menu.ListViewActivity;
 import com.microblink.uisettings.ActivityRunner;
 import com.microblink.uisettings.BlinkIdUISettings;
 import com.microblink.uisettings.DocumentVerificationUISettings;
@@ -130,7 +131,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
     }
 
     private MenuListItem buildBlinkIdCombinedElement() {
-        return new MenuListItem("SCANEAR DPI", new Runnable() {
+        return new MenuListItem("Scanear DPI", new Runnable() {
             @Override
             public void run() {
                 BlinkIdCombinedRecognizer blinkIdCombined = new BlinkIdCombinedRecognizer();
@@ -142,7 +143,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
     }
 
     private MenuListItem listUsers() {
-        return new MenuListItem("USUARIOS REGISTRADOS", new Runnable() {
+        return new MenuListItem("Usuarios Registrados", new Runnable() {
             @Override
             public void run() {
 
@@ -158,7 +159,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
             @Override
             public void run() {
                 Intent intent = null;
-                intent = new Intent(MenuActivity.this, ListViewActivity.class);
+                intent = new Intent(MenuActivity.this, CerrarSesionViewActivity.class);
                 startActivity(intent);
             }
         });

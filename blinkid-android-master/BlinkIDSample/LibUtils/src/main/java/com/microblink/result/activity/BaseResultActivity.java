@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -80,6 +81,10 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
 
+    private static final String LoginURL = "https://lektorgt.com/BlinkID/Users/login.php";
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +136,13 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 String replaceStringExpe = subDateExpe.replace('.','-');
                 String subDate2Expe = replaceStringExpe.substring(6, 16);
 
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                String userId = sharedPreferences.getString(TEXT, "");
+
+                System.out.println(userId);
+
                 createUser(
+                        userId,
                         BlinkIDCombinedRecognizerResultExtractor.firstName,
                         BlinkIDCombinedRecognizerResultExtractor.lastName,
                         BlinkIDCombinedRecognizerResultExtractor.sex,
@@ -272,7 +283,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         }
     }
 
-    private void createUser(final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
+    private void createUser(final String userId,final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
                             final String nac, final String cstatus, final String id, final String mrz, final String dType, final String f, final String l, final String p) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -294,6 +305,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("$idUsername", userId);
                 params.put("firstName", n);
                 params.put("firstLasName", ln);
                 params.put("sex", s);
@@ -312,7 +324,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 params.put("imgFront", f);
                 params.put("imgLater", l);
                 params.put("imgPersonal", p);
-
+                System.out.println(userId);
                 return params;
 
             }

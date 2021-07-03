@@ -1,7 +1,9 @@
-package com.microblink.menu;
+package com.microblink.controller;
+
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,12 +23,14 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.libutils.R;
+import com.microblink.menu.LoadingActivity;
 import com.microblink.result.activity.model.userList;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -47,9 +51,10 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     Button btnFind;
 
     String URL = "https://lektorgt.com/BlinkID/listDocumentData2.php";
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
 
-
-    LoadingActivity loading = new LoadingActivity(ListViewActivity.this);
+    LoadingActivity loading = new LoadingActivity(com.microblink.controller.ListViewActivity.this);
     @Override
     protected void onCreate(Bundle saveInstanceState) {
 
@@ -87,7 +92,13 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void obtenerUsers(){
-        String url = "https://lektorgt.com/BlinkID/listDocumentData2.php";
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        String idUser = sharedPreferences.getString(TEXT, "");
+
+        String url = "https://lektorgt.com/BlinkID/listDocumentData2.php?id=" + idUser;
+        System.out.println("Holaaa aqui 2");
+        System.out.println(url);
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -106,6 +117,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     private void listarUsers(String respuesta){
         final ArrayList<String> lista = new ArrayList <String> ();
         try{
+
             JSONArray jsonArreglo = new JSONArray(respuesta);
             for(int i=0;i<jsonArreglo.length();i++){
 
@@ -121,7 +133,6 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
                 String replacelastName = lastName.replace('\n',' ');
                 String countVisits = jsonArreglo.getJSONObject(i).getString("countVisit");
                 lista.add(jsonArreglo.getJSONObject(i).getString("documentNumber")+ "\n" +replaceNombre+ "\n"+replacelastName+"\n"+"Visitas: "+countVisits+"\n");
-
             }
 
             ArrayAdapter<String> a = new ArrayAdapter(this,android.R.layout.simple_list_item_1,lista);
@@ -133,8 +144,6 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
                     String idBuscado = lista.get(position);
                     String[] split = idBuscado.split("\n");
                     ettIdFind.setText(split[0]);
-
-
                 }
             });
         }catch(Exception e){

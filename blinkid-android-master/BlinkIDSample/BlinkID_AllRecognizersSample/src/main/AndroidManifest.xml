@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme.FullScreen">
 
-        <activity android:name="com.microblink.menu.Validation"
+        <activity android:name="com.microblink.controller.Validation"
             android:label="@string/app_name"
             android:screenOrientation="sensor">
             <intent-filter>
@@ -40,7 +40,7 @@
             android:theme="@style/VerificationFlowTheme" />
 
         <activity
-            android:name="com.microblink.menu.ListViewActivity"
+            android:name="com.microblink.controller.ListViewActivity"
             android:label="@string/app_name">
         </activity>
 
@@ -50,11 +50,13 @@
         </activity>
 
         <activity android:name="com.microblink.menu.BaseMenuActivity"/>
-        <activity android:name="com.microblink.menu.EditViewActivity"/>
+        <activity android:name="com.microblink.controller.EditViewActivity"/>
         <activity android:name="com.microblink.help.HelpActivity"/>
         <activity android:name="com.microblink.result.activity.RecognizerBundleResultActivity"/>
-        <activity android:name="com.microblink.menu.RegisterViewActivity"/>
-        <activity android:name="com.microblink.menu.LoginViewActivity"/>
+        <activity android:name="com.microblink.controller.RegisterViewActivity"/>
+        <activity android:name="com.microblink.controller.LoginViewActivity"/>
+        <activity android:name="com.microblink.controller.VisitViewActivity"/>
+        <activity android:name="com.microblink.controller.CerrarSesionViewActivity"/>
         <activity android:name="com.microblink.activity.BlinkIdActivity"/>
 
         android:usesCleartextTraffic="true"

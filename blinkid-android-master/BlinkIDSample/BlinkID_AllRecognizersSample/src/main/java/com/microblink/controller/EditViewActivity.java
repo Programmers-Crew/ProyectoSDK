@@ -1,7 +1,9 @@
-package com.microblink.menu;
+package com.microblink.controller;
+
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.microblink.libutils.R;
+import com.microblink.menu.LoadingActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +44,12 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
     String idSex;
     ImageView imageFront, imageBack;
 
-    LoadingActivity loading = new LoadingActivity(EditViewActivity.this);
+    LoadingActivity loading = new LoadingActivity(com.microblink.controller.EditViewActivity.this);
 
     String URL = "https://lektorgt.com/blinkid/fetchDocumentData.php" + idSex;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -56,7 +62,7 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
         if(extras!=null){
             idSex = extras.getString("id");
         }else{
-            Toast.makeText(EditViewActivity.this, "Estoy aqui login 2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(com.microblink.controller.EditViewActivity.this, "Estoy aqui login 2", Toast.LENGTH_SHORT).show();
         }
 
         initUi();
@@ -88,10 +94,14 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void readUsers() {
-        String URL = "https://lektorgt.com/BlinkID/fetchDocumentData.php?id=" + idSex;
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        String idUser = sharedPreferences.getString(TEXT, "");
+
+        String URL = "https://lektorgt.com/BlinkID/fetchDocumentData.php?id=" + idSex + "&idUsername=" + idUser;
         System.out.println(URL);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 URL,
                 null,
                 new Response.Listener<JSONObject>() {
@@ -149,8 +159,8 @@ public class EditViewActivity extends AppCompatActivity implements View.OnClickL
         int id = v.getId();
 
         if (id == R.id.button3) {
-            Intent intent = null;
-            intent = new Intent(this, ListViewActivity.class);
+            Intent intent = new Intent(this, VisitViewActivity.class);
+            intent.putExtra("id", idSex);
             startActivity(intent);
         }
     }
