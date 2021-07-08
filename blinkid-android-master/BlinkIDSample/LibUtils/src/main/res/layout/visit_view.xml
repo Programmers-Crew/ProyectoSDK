@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="417dp"
-        android:layout_height="713dp"
+        android:layout_width="418dp"
+        android:layout_height="763dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,23 +63,6 @@
                 android:textColorHint="#FFFFFF" />
         </TableRow>
 
-        <ListView
-            android:id="@+id/lvlVisit"
-            style="@style/Widget.AppCompat.ListView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginBottom="350dp"
-            android:divider="@color/preview_overlay_color"
-            android:dividerHeight="3dp"
-            android:fadeScrollbars="true"
-            android:paddingBottom="50px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableRow"></ListView>
-
         <Button
             android:id="@+id/btnRegresarV"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -101,6 +84,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tableRow" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="408dp"
+            android:layout_height="469dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegresarV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <ListView
+                android:id="@+id/lvlVisit"
+                style="@style/Widget.AppCompat.ListView"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:divider="@color/preview_overlay_color"
+                android:dividerHeight="3dp"
+                android:fadeScrollbars="true"
+                android:paddingBottom="50px"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ListView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

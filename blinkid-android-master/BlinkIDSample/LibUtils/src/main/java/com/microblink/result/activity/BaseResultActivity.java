@@ -2,6 +2,7 @@ package com.microblink.result.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,8 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -31,11 +37,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.Base64;
 import com.microblink.entities.recognizers.HighResImagesBundle;
 import com.microblink.image.Image;
 import com.microblink.image.highres.HighResImageWrapper;
 import com.microblink.libutils.R;
+import com.microblink.menu.ResidentActivity;
+import com.microblink.result.activity.model.PoliceList;
+import com.microblink.result.activity.model.userList;
 import com.microblink.util.ImageUtils;
 
 import androidx.annotation.NonNull;
@@ -45,6 +55,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,9 +65,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+
+import cz.msebera.android.httpclient.Header;
 
 public abstract class BaseResultActivity extends AppCompatActivity {
     RequestQueue requestQueue;
@@ -73,17 +87,20 @@ public abstract class BaseResultActivity extends AppCompatActivity {
 
     private String KEY_IMAGEN = "foto";
     private String KEY_NOMBRE = "idBuscado";
-
     private String idBuscado = "";
 
+    private String[] usuarios;
+
     Bitmap rotatedBmp;
+    private AsyncHttpClient cliente;
+
 
     protected ViewPager mPager;
     private HighResImagesBundle highResImagesBundle;
 
-    private static final String LoginURL = "https://lektorgt.com/BlinkID/Users/login.php";
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+
+    ListView lvlUser;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -119,53 +136,25 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         findViewById(R.id.btnUseResult).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 bitmap =  BlinkIDCombinedRecognizerResultExtractor.frontImage.convertToBitmap();
                 uploadBitmap(bitmap);
                 bitmap2 =  BlinkIDCombinedRecognizerResultExtractor.backImage.convertToBitmap();
                 uploadBitmap1(bitmap2);
-                String subDateBD = BlinkIDCombinedRecognizerResultExtractor.birth.substring(0, 16);
-                String replaceStringBD = subDateBD.replace('.','-');
-                String subDate2BD = replaceStringBD.substring(6, 16);
 
-
-                String subDateExpi = BlinkIDCombinedRecognizerResultExtractor.dateExpire.substring(0, 16);
-                String replaceStringExpi = subDateExpi.replace('.','-');
-                String subDate2Expi = replaceStringExpi.substring(6, 16);
-
-                String subDateExpe = BlinkIDCombinedRecognizerResultExtractor.dateExpedition.substring(0, 16);
-                String replaceStringExpe = subDateExpe.replace('.','-');
-                String subDate2Expe = replaceStringExpe.substring(6, 16);
-
-                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                String userId = sharedPreferences.getString(TEXT, "");
-
-                System.out.println(userId);
-
-                createUser(
-                        userId,
-                        BlinkIDCombinedRecognizerResultExtractor.firstName,
-                        BlinkIDCombinedRecognizerResultExtractor.lastName,
-                        BlinkIDCombinedRecognizerResultExtractor.sex,
-                        BlinkIDCombinedRecognizerResultExtractor.address,
-                        subDate2BD,
-                        BlinkIDCombinedRecognizerResultExtractor.age.toString(),
-                        subDate2Expi,
-                        subDate2Expe,
-                        BlinkIDCombinedRecognizerResultExtractor.placeBirth,
-                        BlinkIDCombinedRecognizerResultExtractor.nacionality1,
-                        BlinkIDCombinedRecognizerResultExtractor.maritalStatus,
-                        BlinkIDCombinedRecognizerResultExtractor.documentNumber,
-                        BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
-                        BlinkIDCombinedRecognizerResultExtractor.documentTipe,
-                        BlinkIDCombinedRecognizerResultExtractor.front,
-                        BlinkIDCombinedRecognizerResultExtractor.backImage.getImageName(),
-                        BlinkIDCombinedRecognizerResultExtractor.personal
-                );
-
-            finish();
+                IntentResident1();
+                finish();
             }
         });
     }
+
+
+    public void IntentResident1(){
+        System.out.println("Estoy aqui");
+        Intent intent = new Intent(this, ResidentActivity.class);
+        startActivity(intent);
+    }
+
 
     private void showHighResImagesDialog() {
         if (highResImagesBundle != null && !highResImagesBundle.getImages().isEmpty()) {
@@ -283,57 +272,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         }
     }
 
-    private void createUser(final String userId,final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
-                            final String nac, final String cstatus, final String id, final String mrz, final String dType, final String f, final String l, final String p) {
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                URL1,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(BaseResultActivity.this, response, Toast.LENGTH_SHORT).show();
-                        System.out.println(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("$idUsername", userId);
-                params.put("firstName", n);
-                params.put("firstLasName", ln);
-                params.put("sex", s);
-                params.put("address", add);
-                params.put("birthDate", bd);
-                params.put("age", age);
-                params.put("expirationDate", expi);
-                params.put("expeditionDate", expe);
-                params.put("birthPlace", bp);
-                params.put("nationality", nac);
-                params.put("civilStatus", cstatus);
-                params.put("documentNumber", id);
-                System.out.println(id);
-                params.put("textMRX", mrz);
-                params.put("documentTyoe", dType);
-                params.put("imgFront", f);
-                params.put("imgLater", l);
-                params.put("imgPersonal", p);
-                System.out.println(userId);
-                return params;
-
-            }
-        };
-        System.out.println("FECHA STRING");
-        System.out.println(expi);
-        requestQueue.add(stringRequest);
-    }
-
 
     public String getStringImagen(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -429,7 +367,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Imagen"), PICK_IMAGE_REQUEST);
     }
-
 
 
 }

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,11 +25,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
+import com.microblink.result.activity.model.PoliceList;
+import com.microblink.result.activity.model.userList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import cz.msebera.android.httpclient.Header;
 
 public class LoginViewActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -52,8 +64,14 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
     private static final String LoginURL = "https://lektorgt.com/BlinkID/Users/login.php";
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "text";
+    public static final String RESIDENTIAL = "residential";
     public static final String SWITCH1 = "switch1";
+    String respuesta;
 
+    Integer index = 0;
+    String r1 = "";
+    Integer indexR1 = 0;
+    String r2 = "";
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -97,10 +115,6 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
             String pass = ettPassL.getText().toString().trim();
 
             login(username, pass);
-
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
-
             progressLogin.setVisibility(View.VISIBLE);
 
         }else if(id == R.id.btnRegister){
@@ -121,27 +135,52 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         startActivity(intentNav);
     }
 
-    String respuesta;
 
+    public void intentToMenu(){
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+    }
     public void login(final String username,final String userPassword){
         final StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 LoginURL,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response)  {
                         Toast.makeText(LoginViewActivity.this, response, Toast.LENGTH_SHORT).show();
-                        respuesta = response;
+                        System.out.println("respuesta 1");
+                        System.out.println(response);
 
-                        Integer index = respuesta.length();
-                        String r1 = respuesta.substring(0, index-2);
-                        Integer indexR1 = r1.length();
-                        String r2 = r1.substring(11, indexR1);
+                        if(response.equals("not found rows")){
+                            Toast.makeText(LoginViewActivity.this, "Contraseña o usuario incorrectas", Toast.LENGTH_SHORT).show();
+                        }else if(response.equals("Hay campos vacios")){
+                            Toast.makeText(LoginViewActivity.this, response, Toast.LENGTH_SHORT).show();
+                        }else if(!response.equals("not found rows") || !response.equals("Hay campos vacios")){
+                            Toast.makeText(LoginViewActivity.this, "Accediste a tu cuenta", Toast.LENGTH_SHORT).show();
+                            System.out.println("credenciales");
+                            System.out.println(index);
+                            System.out.println(r1);
+                            System.out.println(indexR1);
+                            System.out.println(r2);
+
+                            index = response.length();
+                            r1 = response.substring(0, index-2);
+                            indexR1 = r1.length();
+                            r2 = r1.substring(11, indexR1);
+                            intentToMenu();
+                        }
+
 
                         if(switchLogin.isChecked()) {
+                            System.out.println("ID POLICIA");
+                            System.out.println(r2);
                             saveDate(r2);
+                            obtenerUsers();
                             System.out.println("se guardaron los datos");
+                        }else if(!switchLogin.isChecked()){
+
                         }
+
                         progressLogin.setVisibility(View.GONE);
                         limpiarText();
 
@@ -172,12 +211,84 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
     };
 
 
+    private void obtenerUsers(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_WORLD_READABLE);
+
+
+        String idUser = sharedPreferences.getString(TEXT, "");
+
+        String url = "https://lektorgt.com/BlinkID/Users/listPolice.php?id=" + idUser;
+
+        System.out.println("Holaaa aqui 2");
+        System.out.println(url);
+        cliente.post(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if(statusCode == 200){
+                    listarUsers(new String(responseBody));
+                    String p = new String(responseBody);
+                    System.out.println(p);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    private void listarUsers(String respuesta){
+        final ArrayList<String> lista = new ArrayList <String> ();
+        String residential = "";
+        PoliceList u = new PoliceList();
+
+        try{
+            JSONArray jsonArreglo = new JSONArray(respuesta);
+
+                u.setUserResidential(jsonArreglo.getJSONObject(0).getString("userResidential"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("ListUser ID");
+
+        saveResidential(u.getUserResidential());
+    }
+
+
     public void saveDate(String id){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        System.out.println("SAVE DATA");
+        System.out.println(id);
+
         editor.putString(TEXT, id);
         editor.commit();
+
+        System.out.println("SAVE DATA 2");
+        String idUser = sharedPreferences.getString(TEXT, "root");
+        System.out.println(idUser);
+
     }
+
+    public void saveResidential(String resdential){
+
+        System.out.println(resdential);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        editor.putString(RESIDENTIAL, resdential);
+        editor.commit();
+
+        System.out.println("save data 3");
+        String idResidential = sharedPreferences.getString(RESIDENTIAL, "root");
+        System.out.println(idResidential);
+
+    }
+
+    @Override public void onBackPressed() { return; }
+
 }
 

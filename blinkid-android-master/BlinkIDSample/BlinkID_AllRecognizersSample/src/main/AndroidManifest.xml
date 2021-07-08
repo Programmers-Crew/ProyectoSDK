@@ -47,6 +47,7 @@
         <activity android:name="com.microblink.blinkid.MenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="sensor">
+            android:noHistory="true"
         </activity>
 
         <activity android:name="com.microblink.menu.BaseMenuActivity"/>
@@ -55,14 +56,14 @@
         <activity android:name="com.microblink.result.activity.RecognizerBundleResultActivity"/>
         <activity android:name="com.microblink.controller.RegisterViewActivity"/>
         <activity android:name="com.microblink.controller.LoginViewActivity"/>
+        <activity android:name="com.microblink.menu.ResidentActivity"/>
         <activity android:name="com.microblink.controller.VisitViewActivity"/>
-        <activity android:name="com.microblink.controller.CerrarSesionViewActivity"/>
+        <activity android:name="com.microblink.controller.CerrarSesionViewActivity" android:noHistory="true"/>
         <activity android:name="com.microblink.activity.BlinkIdActivity"/>
 
         android:usesCleartextTraffic="true"
 
     </application>
-
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>

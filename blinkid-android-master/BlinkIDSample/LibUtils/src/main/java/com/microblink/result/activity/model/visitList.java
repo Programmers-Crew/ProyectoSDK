@@ -4,6 +4,8 @@ public class visitList {
 
     private String idDate;
     private String idTime;
+    private String observation;
+    private String userNoHouse;
 
     public visitList() {
 
@@ -30,4 +32,19 @@ public class visitList {
         this.idTime = idTime;
     }
 
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+
+    public String getUserNoHouse() {
+        return userNoHouse;
+    }
+
+    public void setUserNoHouse(String userNoHouse) {
+        this.userNoHouse = userNoHouse;
+    }
 }

@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mb_transparent"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="50dp">
+        android:padding="50dp"
+        android:background="@color/mb_transparent"
+        android:backgroundTint="@color/mb_transparent">
 
         <ProgressBar
             android:id="@+id/progressBar3"

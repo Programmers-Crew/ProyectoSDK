@@ -189,4 +189,7 @@ public class MenuActivity extends ResultHandlerMenuActivity {
         return new RecognizerBundle(recognizers);
     }
 
+    @Override public void onBackPressed() { return; }
+
+
 }

@@ -41,7 +41,6 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
 
     AsyncHttpClient client=new AsyncHttpClient();
 
-    ProgressDialog pDialog;
 
     EditText ettFindV;
     Button btnRegresarV,btnFindV;
@@ -51,10 +50,8 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
     String idSex;
     String direccion;
 
-    private static final String LoginURL = "https://lektorgt.com/BlinkID/Users/login.php";
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "text";
-    public static final String SWITCH1 = "switch1";
 
     LoadingActivity loading = new LoadingActivity(com.microblink.controller.VisitViewActivity.this);
 
@@ -70,6 +67,8 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
 
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
+            System.out.println("VistView");
+            System.out.println(extras.getString("id"));
             idSex = extras.getString("id");
         }else{
             Toast.makeText(com.microblink.controller.VisitViewActivity.this, "Estoy aqui login 2", Toast.LENGTH_SHORT).show();
@@ -110,7 +109,7 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String idUser = sharedPreferences.getString(TEXT, "");
 
-        String url = "https://lektorgt.com/BlinkID/Visits/listVisit.php?id=" + idSex + "&idUsername=" + idUser;
+        String url = "https://lektorgt.com/BlinkID/Visits/listVisit.php?id=" + idSex + "&userId=" + idUser;
         System.out.println("Holaaa aqui 2");
         System.out.println(url);
         cliente.post(url, new AsyncHttpResponseHandler() {
@@ -145,13 +144,15 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
                 visitList u = new visitList();
                 u.setIdDate(jsonArreglo.getJSONObject(i).getString("idDate"));
                 u.setIdTime(jsonArreglo.getJSONObject(i).getString("idTime"));
+                u.setObservation(jsonArreglo.getJSONObject(i).getString("observation"));
+                u.setUserNoHouse(jsonArreglo.getJSONObject(i).getString("userNoHouse"));
 
-                lista.add(jsonArreglo.getJSONObject(i).getString("idDate")+ "\n" +jsonArreglo.getJSONObject(i).getString("idTime"));
+                lista.add(jsonArreglo.getJSONObject(i).getString("idDate")+ "\n" +jsonArreglo.getJSONObject(i).getString("idTime")+ "\n" + jsonArreglo.getJSONObject(i).getString("observation")+ "\n" + jsonArreglo.getJSONObject(i).getString("userNoHouse"));
             }
 
             ArrayAdapter<String> a = new ArrayAdapter(this,android.R.layout.simple_list_item_1,lista);
             lvlVisit.setAdapter(a);
-            loading.dismissDialog();
+            //loading.dismissDialog();
             lvlVisit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

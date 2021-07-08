@@ -51,10 +51,11 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     Button btnFind;
 
     String URL = "https://lektorgt.com/BlinkID/listDocumentData2.php";
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+    public static String SHARED_PREFS = "sharedPrefs";
+    public static String TEXT = "text";
 
     LoadingActivity loading = new LoadingActivity(com.microblink.controller.ListViewActivity.this);
+
     @Override
     protected void onCreate(Bundle saveInstanceState) {
 
@@ -92,9 +93,12 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void obtenerUsers(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_WORLD_READABLE);
 
-        String idUser = sharedPreferences.getString(TEXT, "");
+        String idUser = sharedPreferences.getString(TEXT, "root");
+
+        System.out.println("PREFERENCES ID");
+        System.out.println(idUser);
 
         String url = "https://lektorgt.com/BlinkID/listDocumentData2.php?id=" + idUser;
         System.out.println("Holaaa aqui 2");

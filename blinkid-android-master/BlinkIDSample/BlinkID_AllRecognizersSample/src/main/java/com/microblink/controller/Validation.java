@@ -49,6 +49,8 @@ public class Validation extends AppCompatActivity implements View.OnClickListene
         if (id == R.id.btnValidation) {
 
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
             String idValidation = sharedPreferences.getString(TEXT, "");
             System.out.println("get data");
             System.out.println(idValidation);

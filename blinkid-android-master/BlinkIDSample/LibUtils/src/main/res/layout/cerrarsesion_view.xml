@@ -47,7 +47,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="85dp"
             android:text="CERRAR SESION"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,8 +93,12 @@
 
         <TextView
             android:id="@+id/textView17"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
             android:fontFamily="@font/poppinsmedium"
             android:text="Es un gusto poder servirte "
             android:textColor="#e3f2fd "
@@ -106,9 +110,13 @@
 
         <TextView
             android:id="@+id/textView18"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
             android:fontFamily="@font/poppinsmedium"
             android:text="Esperamos que vuelvas pronto."
             android:textColor="#e3f2fd"

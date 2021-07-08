@@ -105,9 +105,10 @@ public class CerrarSesionViewActivity extends AppCompatActivity implements View.
 
     public void saveDate(String id){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(TEXT, id);
-        editor.commit();
+        String idUser = sharedPreferences.getString(TEXT, "");
+        System.out.println("Borrar preferencias");
+        System.out.println(idUser);
     }
+
 }

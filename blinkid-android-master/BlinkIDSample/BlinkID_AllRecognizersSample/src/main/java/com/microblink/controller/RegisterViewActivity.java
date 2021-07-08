@@ -119,6 +119,7 @@ public class RegisterViewActivity extends AppCompatActivity implements View.OnCl
                     public void onResponse(String response) {
                         Toast.makeText(RegisterViewActivity.this, response, Toast.LENGTH_SHORT).show();
                         respuesta = response;
+                        System.out.println(response);
                         if(respuesta.equals("Usuario registrado exitosamente")){
                             limpiarText();
                         }
