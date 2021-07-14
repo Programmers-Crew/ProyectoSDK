@@ -1,19 +1,14 @@
 package com.microblink.menu;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,19 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.libutils.R;
-import com.microblink.result.activity.BaseResultActivity;
 import com.microblink.result.activity.model.PoliceList;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import cz.msebera.android.httpclient.Header;
 
 public class ResidentActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -50,6 +38,9 @@ public class ResidentActivity extends AppCompatActivity implements View.OnClickL
     public static EditText ettNoCasa;
     public static EditText ettObservaciones;
     Button btnContinue;
+
+    private Bitmap bitmap;
+    private Bitmap bitmap2;
 
     private static final String URL1 = "https://lektorgt.com/BlinkID/saveDocumentData.php";
 
@@ -91,55 +82,6 @@ public class ResidentActivity extends AppCompatActivity implements View.OnClickL
 
         if (id == R.id.btnContinue) {
             loading.startLoading();
-            obtenerUsers();
-        }
-    }
-
-    private void obtenerUsers(){
-
-        String idUser = ettNoCasa.getText().toString().trim();
-
-        String url = "https://lektorgt.com/BlinkID/Users/findUserByNo.php?id=" + idUser;
-        System.out.println("Holaaa aqui 2");
-        System.out.println(url);
-        cliente.post(url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    listarUsers(new String(responseBody));
-                    String p = new String(responseBody);
-                    if(p.equals("No se encontraron resultados")){
-                        Toast.makeText(ResidentActivity.this, "Numero de casa inexistente", Toast.LENGTH_SHORT).show();
-                    }
-
-                System.out.println("devuelta el obtener");
-                    System.out.println(p);
-
-        }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-    }
-
-    private void listarUsers(String respuesta){
-        final ArrayList<String> lista = new ArrayList <String> ();
-
-        try{
-            JSONArray jsonArreglo = new JSONArray(respuesta);
-
-            u.setUserResidential(jsonArreglo.getJSONObject(0).getString("userId"));
-            u.setObservation(ettObservaciones.getText().toString().trim());
-
-
-            System.out.println("Primera vez");
-            System.out.println(jsonArreglo.getJSONObject(0).getString("userId"));
-            System.out.println(ettObservaciones.getText().toString().trim());
-
-
-
-            /* */
 
             String subDateBD = BlinkIDCombinedRecognizerResultExtractor.birth.substring(0, 16);
             String replaceStringBD = subDateBD.replace('.','-');
@@ -157,35 +99,31 @@ public class ResidentActivity extends AppCompatActivity implements View.OnClickL
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
             String userId = sharedPreferences.getString(TEXT, "");
 
-                createUser(
-                        userId,
-                        BlinkIDCombinedRecognizerResultExtractor.firstName,
-                        BlinkIDCombinedRecognizerResultExtractor.lastName,
-                        BlinkIDCombinedRecognizerResultExtractor.sex,
-                        BlinkIDCombinedRecognizerResultExtractor.address,
-                        subDate2BD,
-                        BlinkIDCombinedRecognizerResultExtractor.age.toString(),
-                        subDate2Expi,
-                        subDate2Expe,
-                        BlinkIDCombinedRecognizerResultExtractor.placeBirth,
-                        BlinkIDCombinedRecognizerResultExtractor.nacionality1,
-                        BlinkIDCombinedRecognizerResultExtractor.maritalStatus,
-                        BlinkIDCombinedRecognizerResultExtractor.documentNumber,
-                        BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
-                        BlinkIDCombinedRecognizerResultExtractor.documentTipe,
-                        BlinkIDCombinedRecognizerResultExtractor.front,
-                        BlinkIDCombinedRecognizerResultExtractor.backImage.getImageName(),
-                        BlinkIDCombinedRecognizerResultExtractor.personal,
-                        u.getUserResidential(),
-                        ettObservaciones.getText().toString().trim()
-                );
-
-
-
-        }catch(Exception e){
-            e.printStackTrace();
+            createUser(
+                    userId,
+                    BlinkIDCombinedRecognizerResultExtractor.firstName,
+                    BlinkIDCombinedRecognizerResultExtractor.lastName,
+                    BlinkIDCombinedRecognizerResultExtractor.sex,
+                    BlinkIDCombinedRecognizerResultExtractor.address,
+                    subDate2BD,
+                    BlinkIDCombinedRecognizerResultExtractor.age.toString(),
+                    subDate2Expi,
+                    subDate2Expe,
+                    BlinkIDCombinedRecognizerResultExtractor.placeBirth,
+                    BlinkIDCombinedRecognizerResultExtractor.nacionality1,
+                    BlinkIDCombinedRecognizerResultExtractor.maritalStatus,
+                    BlinkIDCombinedRecognizerResultExtractor.documentNumber,
+                    BlinkIDCombinedRecognizerResultExtractor.mrx.toString(),
+                    BlinkIDCombinedRecognizerResultExtractor.documentTipe,
+                    BlinkIDCombinedRecognizerResultExtractor.front,
+                    BlinkIDCombinedRecognizerResultExtractor.backImage.getImageName(),
+                    BlinkIDCombinedRecognizerResultExtractor.personal,
+                    ettNoCasa.getText().toString().trim(),
+                    ettObservaciones.getText().toString().trim()
+            );
         }
     }
+
 
     private void createUser(final String userId,final String n, final String ln, final String s, final String add, final String bd, final String age, final String expi, final String expe, final String bp,
                             final String nac, final String cstatus, final String id, final String mrz, final String dType, final String f, final String l, final String p, final String no, final String observation) {
@@ -200,8 +138,6 @@ public class ResidentActivity extends AppCompatActivity implements View.OnClickL
                         if(response.equals("Visita se agrego Correctamente")){
                             loading.dismissDialog();
                             finish();
-                        }else{
-                            obtenerUsers();
                         }
 
                         System.out.println("respuesta");
@@ -253,5 +189,37 @@ public class ResidentActivity extends AppCompatActivity implements View.OnClickL
         };
         requestQueue.add(stringRequest);
     }
+
+/*
+    private void obtenerUsers(){
+
+        String idUser = ettNoCasa.getText().toString().trim();
+
+        String url = "https://lektorgt.com/BlinkID/Users/findUserByNo.php?id=" + idUser;
+        System.out.println("Holaaa aqui 2");
+        System.out.println(url);
+        cliente.post(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                listarUsers(new String(responseBody));
+                String p = new String(responseBody);
+
+                if(p.equals("No se encontraron resultados")){
+                    Toast.makeText(ResidentActivity.this, "Numero de casa inexistente", Toast.LENGTH_SHORT).show();
+                }
+
+                System.out.println("devuelta el obtener");
+                System.out.println(p);
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+    */
+
 
 }

@@ -1,6 +1,5 @@
 package com.microblink.controller;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
-import com.loopj.android.http.*;
-
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
@@ -25,14 +18,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.libutils.R;
 import com.microblink.menu.LoadingActivity;
 import com.microblink.result.activity.model.userList;
-import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-
 import cz.msebera.android.httpclient.Header;
 
 public class ListViewActivity extends AppCompatActivity implements View.OnClickListener{

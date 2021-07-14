@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,12 +27,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
 import com.microblink.result.activity.model.PoliceList;
-import com.microblink.result.activity.model.userList;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

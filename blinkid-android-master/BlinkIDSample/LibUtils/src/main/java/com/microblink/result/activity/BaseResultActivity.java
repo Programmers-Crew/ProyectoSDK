@@ -2,75 +2,49 @@ package com.microblink.result.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.Base64;
 import com.microblink.entities.recognizers.HighResImagesBundle;
 import com.microblink.image.Image;
 import com.microblink.image.highres.HighResImageWrapper;
 import com.microblink.libutils.R;
+import com.microblink.menu.LoadingActivity;
 import com.microblink.menu.ResidentActivity;
-import com.microblink.result.activity.model.PoliceList;
-import com.microblink.result.activity.model.userList;
 import com.microblink.util.ImageUtils;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerResultExtractor;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
-import cz.msebera.android.httpclient.Header;
 
 public abstract class BaseResultActivity extends AppCompatActivity {
     RequestQueue requestQueue;
@@ -101,6 +75,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
 
     ListView lvlUser;
+    LoadingActivity loading = new LoadingActivity(BaseResultActivity.this);
 
     @SuppressLint("InlinedApi")
     @Override
@@ -144,6 +119,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
 
                 IntentResident1();
                 finish();
+             //   loading.startLoading();
             }
         });
     }
@@ -292,6 +268,8 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(new String(response.data));
                             System.out.println(obj.getString("message"));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                //            loading.dismissDialog();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -304,8 +282,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                         Log.e("GotError",""+error.getMessage());
                     }
                 }) {
-
-
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
@@ -314,8 +290,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 return params;
             }
         };
-
-        //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
 
@@ -329,6 +303,8 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(new String(response.data));
                             System.out.println(obj.getString("message"));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                       //     loading.dismissDialog();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

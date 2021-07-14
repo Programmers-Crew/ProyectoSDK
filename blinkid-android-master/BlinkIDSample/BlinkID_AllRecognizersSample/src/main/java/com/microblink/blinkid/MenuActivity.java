@@ -10,7 +10,6 @@ import com.microblink.controller.ListViewActivity;
 import com.microblink.entities.recognizers.Recognizer;
 import com.microblink.entities.recognizers.RecognizerBundle;
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer;
-import com.microblink.menu.LoadingActivity;
 import com.microblink.menu.MenuListItem;
 import com.microblink.menu.ResultHandlerMenuActivity;
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer;

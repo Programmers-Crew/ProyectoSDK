@@ -1,6 +1,5 @@
 package com.microblink.controller;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,21 +8,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.microblink.blinkid.MenuActivity;
 import com.microblink.menu.LoadingActivity;
-import com.microblink.result.activity.model.userList;
 import com.microblink.result.activity.model.visitList;
 
 import org.json.JSONArray;
@@ -89,7 +83,6 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
         ettFindV = findViewById(com.microblink.libutils.R.id.ettFindV);
         btnFindV = findViewById(com.microblink.libutils.R.id.btnFindV);
         lvlVisit = findViewById(com.microblink.libutils.R.id.lvlVisit);
-        progressBar4 = findViewById(com.microblink.libutils.R.id.progressBar4);
     }
 
     public void onClick(View v) {
@@ -100,7 +93,7 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
         }else if(id == com.microblink.libutils.R.id.btnFindV){
-
+            findVisit();
 
         }
     }
@@ -122,6 +115,8 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
                     if(va.equals("No se encontraron resultados")) {
                         Toast.makeText(VisitViewActivity.this, "Visitas no encontradas", Toast.LENGTH_SHORT).show();
                     }else if(!va.equals("No se encontraron resultados")){
+                        System.out.println("visitas encontradas");
+                        System.out.println(va);
                         Toast.makeText(VisitViewActivity.this, "Visitas encontradas", Toast.LENGTH_SHORT).show();
                     }
 
@@ -139,15 +134,15 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
         final ArrayList<String> lista = new ArrayList <String> ();
         try{
             JSONArray jsonArreglo = new JSONArray(respuesta);
-            for(int i=0;i<jsonArreglo.length();i++){
+            for(int i=1;i<jsonArreglo.length();i++){
 
                 visitList u = new visitList();
                 u.setIdDate(jsonArreglo.getJSONObject(i).getString("idDate"));
                 u.setIdTime(jsonArreglo.getJSONObject(i).getString("idTime"));
                 u.setObservation(jsonArreglo.getJSONObject(i).getString("observation"));
-                u.setUserNoHouse(jsonArreglo.getJSONObject(i).getString("userNoHouse"));
+                u.setUserNoHouse(jsonArreglo.getJSONObject(i).getString("idUsername"));
 
-                lista.add(jsonArreglo.getJSONObject(i).getString("idDate")+ "\n" +jsonArreglo.getJSONObject(i).getString("idTime")+ "\n" + jsonArreglo.getJSONObject(i).getString("observation")+ "\n" + jsonArreglo.getJSONObject(i).getString("userNoHouse"));
+                lista.add(jsonArreglo.getJSONObject(i).getString("idDate")+ "\n" +jsonArreglo.getJSONObject(i).getString("idTime")+ "\n" + jsonArreglo.getJSONObject(i).getString("observation")+ "\n" + jsonArreglo.getJSONObject(i).getString("idUsername"));
             }
 
             ArrayAdapter<String> a = new ArrayAdapter(this,android.R.layout.simple_list_item_1,lista);
@@ -162,5 +157,38 @@ public class VisitViewActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
     }
+
+
+    private void findVisit(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String idUser = sharedPreferences.getString(TEXT, "");
+
+        String url = "https://lektorgt.com/BlinkID/Visits/findVisit.php?id=" + idSex + "&userId=" + idUser + "&date=" + ettFindV.getText();
+        System.out.println("Holaaa aqui 2");
+        System.out.println(url);
+        cliente.post(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if(statusCode == 200){
+                    String va="";
+                    va = new String(responseBody);
+
+                    if(va.equals("No se encontraron resultados")) {
+                        Toast.makeText(VisitViewActivity.this, "Visitas no encontradas", Toast.LENGTH_SHORT).show();
+                    }else if(!va.equals("No se encontraron resultados")){
+                        Toast.makeText(VisitViewActivity.this, "Visitas encontradas", Toast.LENGTH_SHORT).show();
+                    }
+                    listarVisit(new String(responseBody));
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+
+
 }
 

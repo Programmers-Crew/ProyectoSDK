@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
-import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
 
 public class CerrarSesionViewActivity extends AppCompatActivity implements View.OnClickListener{
