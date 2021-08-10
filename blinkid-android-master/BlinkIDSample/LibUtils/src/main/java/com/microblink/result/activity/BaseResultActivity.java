@@ -2,8 +2,10 @@ package com.microblink.result.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -17,11 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
@@ -42,6 +47,7 @@ import com.microblink.result.extract.blinkid.generic.BlinkIDCombinedRecognizerRe
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +56,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     AsyncHttpClient client=new AsyncHttpClient();
 
-    private static final String URL1 = "https://lektorgt.com/BlinkID/saveDocumentData.php";
 
     private Bitmap bitmap;
     private Bitmap bitmap2;
@@ -73,6 +78,8 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     private HighResImagesBundle highResImagesBundle;
 
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+    public static final String CONFIRM = "confirm";
 
     ListView lvlUser;
     LoadingActivity loading = new LoadingActivity(BaseResultActivity.this);
@@ -116,10 +123,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 uploadBitmap(bitmap);
                 bitmap2 =  BlinkIDCombinedRecognizerResultExtractor.backImage.convertToBitmap();
                 uploadBitmap1(bitmap2);
-
-                IntentResident1();
-                finish();
-             //   loading.startLoading();
+                loading.startLoading();
             }
         });
     }
@@ -268,7 +272,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(new String(response.data));
                             System.out.println(obj.getString("message"));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                //            loading.dismissDialog();
+                            System.out.println(response);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -278,7 +282,6 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("GotError",""+error.getMessage());
                     }
                 }) {
@@ -292,6 +295,7 @@ public abstract class BaseResultActivity extends AppCompatActivity {
         };
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
+
 
     public void uploadBitmap1(final Bitmap bitmap) {
         String ROOT_URL = "https://lektorgt.com/BlinkID/uploadBack.php?a="+BlinkIDCombinedRecognizerResultExtractor.documentNumber;
@@ -303,9 +307,11 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(new String(response.data));
                             System.out.println(obj.getString("message"));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                       //     loading.dismissDialog();
-
-                        } catch (JSONException e) {
+                            loading.dismissDialog();
+                            saveConfirm(0);
+                            IntentResident1();
+                            finish();
+                        } catch (JSONException e){
                             e.printStackTrace();
                         }
                     }
@@ -313,12 +319,11 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("GotError",""+error.getMessage());
+                        IntentResident1();
+                        saveConfirm(1);
                     }
                 }) {
-
-
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
@@ -327,10 +332,10 @@ public abstract class BaseResultActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
+
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
@@ -345,4 +350,13 @@ public abstract class BaseResultActivity extends AppCompatActivity {
     }
 
 
+    public void saveConfirm(Integer c){
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        editor.putInt(CONFIRM, c);
+        editor.commit();
+    }
 }

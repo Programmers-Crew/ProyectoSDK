@@ -94,6 +94,8 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if(statusCode == 200){
+                    System.out.println("Pipi");
+                    System.out.println(new String(responseBody));
                     listarUsers(new String(responseBody));
                 }
             }

@@ -17,14 +17,14 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.microblink.libutils.R;
 
-public class CerrarSesionViewActivity extends AppCompatActivity implements View.OnClickListener{
+public class CerrarSesionViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AsyncHttpClient cliente;
 
     RequestQueue requestQueue;
 
 
-    AsyncHttpClient client=new AsyncHttpClient();
+    AsyncHttpClient client = new AsyncHttpClient();
 
     ProgressDialog pDialog;
     ImageButton btnFacebook, btnWeb;
@@ -43,7 +43,7 @@ public class CerrarSesionViewActivity extends AppCompatActivity implements View.
         super.onCreate(saveInstanceState);
         setContentView(R.layout.cerrarsesion_view);
 
-        AsyncHttpClient client=new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient();
         cliente = new AsyncHttpClient();
         requestQueue = Volley.newRequestQueue(this);
 
@@ -87,27 +87,34 @@ public class CerrarSesionViewActivity extends AppCompatActivity implements View.
 
             progressCerrar.setVisibility(View.GONE);
 
-        }else if(id == R.id.btnFacebook){
+        } else if (id == R.id.btnFacebook) {
             direccion = "https://www.youtube.com/watch?v=LB2AhSKg1OE";
             goToFacebook(direccion);
-        }else if(id == R.id.btnWeb){
+        } else if (id == R.id.btnWeb) {
             direccion = "http://lektorgt.com/";
             goToFacebook(direccion);
         }
     }
 
-    public void goToFacebook(String d){
+    public void goToFacebook(String d) {
         Uri uri = Uri.parse(d);
         Intent intentNav = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intentNav);
     }
 
-    public void saveDate(String id){
+    public void saveDate(String id) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        String idUser = sharedPreferences.getString(TEXT, "");
-        System.out.println("Borrar preferencias");
+        System.out.println("SAVE DATA");
+        System.out.println(id);
+
+        editor.putString(TEXT, id);
+        editor.commit();
+
+        System.out.println("SAVE DATA 2");
+        String idUser = sharedPreferences.getString(TEXT, "root");
         System.out.println(idUser);
-    }
 
+    }
 }

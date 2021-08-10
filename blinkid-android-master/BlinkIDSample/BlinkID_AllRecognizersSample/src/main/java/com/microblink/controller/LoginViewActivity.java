@@ -1,9 +1,12 @@
 package com.microblink.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,25 +31,31 @@ import com.microblink.blinkid.MenuActivity;
 import com.microblink.libutils.R;
 import com.microblink.result.activity.model.PoliceList;
 import org.json.JSONArray;
+
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
-public class LoginViewActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AsyncHttpClient cliente;
 
     RequestQueue requestQueue;
 
 
-    AsyncHttpClient client=new AsyncHttpClient();
+    AsyncHttpClient client = new AsyncHttpClient();
 
     ProgressDialog pDialog;
 
     EditText ettUsernameL, ettPassL;
-    Button btnRegister,btnLogin;
+    Button btnRegister, btnLogin;
     ImageButton imageButton6, imageButton5;
     ProgressBar progressLogin;
     Switch switchLogin;
@@ -65,14 +74,15 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
     String r1 = "";
     Integer indexR1 = 0;
     String r2 = "";
-
+    String stringMac = "";
+    String macAddress = "";
     @Override
     protected void onCreate(Bundle saveInstanceState) {
 
         super.onCreate(saveInstanceState);
         setContentView(R.layout.login_view);
 
-        AsyncHttpClient client=new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient();
         cliente = new AsyncHttpClient();
         requestQueue = Volley.newRequestQueue(this);
 
@@ -84,7 +94,6 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         imageButton6.setOnClickListener(this);
 
         direccion = "";
-
     }
 
     private void initUi() {
@@ -104,51 +113,52 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         int id = v.getId();
 
         if (id == R.id.btnLoginL) {
+            getMac();
             String username = ettUsernameL.getText().toString().trim();
             String pass = ettPassL.getText().toString().trim();
-
-            login(username, pass);
+            login(username, pass, macAddress);
             progressLogin.setVisibility(View.VISIBLE);
 
-        }else if(id == R.id.btnRegister){
+        } else if (id == R.id.btnRegister) {
             Intent intent = new Intent(this, RegisterViewActivity.class);
             startActivity(intent);
-        }else if(id == R.id.imageButton5){
+        } else if (id == R.id.imageButton5) {
             direccion = "https://www.youtube.com/watch?v=LB2AhSKg1OE";
             goToFacebook(direccion);
-        }else if(id == R.id.imageButton6){
+        } else if (id == R.id.imageButton6) {
             direccion = "http://lektorgt.com/";
             goToFacebook(direccion);
         }
     }
 
-    public void goToFacebook(String d){
+    public void goToFacebook(String d) {
         Uri uri = Uri.parse(d);
         Intent intentNav = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intentNav);
     }
 
 
-    public void intentToMenu(){
+    public void intentToMenu() {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
-    public void login(final String username,final String userPassword){
+
+    public void login(final String username, final String userPassword, final String mac) {
         final StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 LoginURL,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response)  {
+                    public void onResponse(String response) {
                         Toast.makeText(LoginViewActivity.this, response, Toast.LENGTH_SHORT).show();
                         System.out.println("respuesta 1");
                         System.out.println(response);
 
-                        if(response.equals("not found rows")){
+                        if (response.equals("not found rows")) {
                             Toast.makeText(LoginViewActivity.this, "Contraseña o usuario incorrectas", Toast.LENGTH_SHORT).show();
-                        }else if(response.equals("Hay campos vacios")){
+                        } else if (response.equals("Hay campos vacios")) {
                             Toast.makeText(LoginViewActivity.this, response, Toast.LENGTH_SHORT).show();
-                        }else if(!response.equals("not found rows") || !response.equals("Hay campos vacios")){
+                        } else if (!response.equals("not found rows") || !response.equals("Hay campos vacios")) {
                             Toast.makeText(LoginViewActivity.this, "Accediste a tu cuenta", Toast.LENGTH_SHORT).show();
                             System.out.println("credenciales");
                             System.out.println(index);
@@ -157,20 +167,20 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
                             System.out.println(r2);
 
                             index = response.length();
-                            r1 = response.substring(0, index-2);
+                            r1 = response.substring(0, index - 2);
                             indexR1 = r1.length();
                             r2 = r1.substring(11, indexR1);
                             intentToMenu();
                         }
 
 
-                        if(switchLogin.isChecked()) {
+                        if (switchLogin.isChecked()) {
                             System.out.println("ID POLICIA");
                             System.out.println(r2);
                             saveDate(r2);
                             obtenerUsers();
                             System.out.println("se guardaron los datos");
-                        }else if(!switchLogin.isChecked()){
+                        } else if (!switchLogin.isChecked()) {
 
                         }
 
@@ -186,25 +196,28 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
                         System.out.println(error);
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("userName", username);
                 params.put("userPassword", userPassword);
+                params.put("macAddress", mac);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    public void limpiarText(){
+    public void limpiarText() {
         ettUsernameL.setText("");
         ettPassL.setText("");
-    };
+    }
+
+    ;
 
 
-    private void obtenerUsers(){
+    private void obtenerUsers() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_WORLD_READABLE);
 
 
@@ -217,7 +230,7 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         cliente.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                if(statusCode == 200){
+                if (statusCode == 200) {
                     listarUsers(new String(responseBody));
                     String p = new String(responseBody);
                     System.out.println(p);
@@ -231,16 +244,16 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
-    private void listarUsers(String respuesta){
-        final ArrayList<String> lista = new ArrayList <String> ();
+    private void listarUsers(String respuesta) {
+        final ArrayList<String> lista = new ArrayList<String>();
         String residential = "";
         PoliceList u = new PoliceList();
 
-        try{
+        try {
             JSONArray jsonArreglo = new JSONArray(respuesta);
 
-                u.setUserResidential(jsonArreglo.getJSONObject(0).getString("userResidential"));
-        }catch(Exception e){
+            u.setUserResidential(jsonArreglo.getJSONObject(0).getString("userResidential"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("ListUser ID");
@@ -249,7 +262,7 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    public void saveDate(String id){
+    public void saveDate(String id) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -265,7 +278,7 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    public void saveResidential(String resdential){
+    public void saveResidential(String resdential) {
 
         System.out.println(resdential);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -277,11 +290,27 @@ public class LoginViewActivity extends AppCompatActivity implements View.OnClick
 
         System.out.println("save data 3");
         String idResidential = sharedPreferences.getString(RESIDENTIAL, "root");
-        System.out.println(idResidential);
-
     }
 
-    @Override public void onBackPressed() { return; }
+    public void getMac(){
+        try {
+            List<NetworkInterface> networkInterfaceList = Collections.list(NetworkInterface.getNetworkInterfaces());
 
+            for (NetworkInterface networkInterface:networkInterfaceList){
+                if(networkInterface.getName().equalsIgnoreCase("wlan0")){
+                    for(int i = 0; i<networkInterface.getHardwareAddress().length; i++){
+                        String stringMacByte = Integer.toHexString(networkInterface.getHardwareAddress()[i] & 0xFF);
+
+                        if(stringMacByte.length() == 1){
+                            stringMacByte = "0" + stringMacByte;
+                        }
+                        stringMac = stringMac+ stringMacByte.toUpperCase() + ":";
+                    }
+                }
+            }
+            macAddress = stringMac;
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
 }
-
